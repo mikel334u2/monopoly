@@ -9,11 +9,20 @@
 #define MONO_H_
 
 #include <iostream>
+#include <string>
 using namespace std;
 
-class player{};
+class Player{};
 
-class property{};
+class Property{
+
+	string typeOfProperty;
+	int price;
+	int rent;
+	Player owner;
+	int numberOfHouses;
+
+};
 
 
 
