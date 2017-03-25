@@ -5,7 +5,7 @@ class boardView
 {
 	private:
 		string property;
-		string location;
+		int location;
 
 	public:
 	
@@ -14,19 +14,19 @@ class boardView
 			return property;
 		}
 
-		string getLocation()
+		int getLocation()
 		{
 			return location;
 		}
 
-		string setProperty(string property)
+		setProperty(string property)
 		{
 			this.property = property;
 		}
 
-		string setLocation(string location)
+		setLocation(int location)
 		{
-			this.locaction = location;
+			this.location = location;
 		}	
 
 }
