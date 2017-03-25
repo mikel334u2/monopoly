@@ -10,17 +10,39 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
 
-class Player{};
-
 class Property{
+
+private:
 
 	string typeOfProperty;
 	int price;
 	int rent;
-	Player owner;
 	int numberOfHouses;
+	int housePrices;
+
+public:
+
+	Property();
+
+};
+
+class Player{
+
+private:
+
+	string name;
+	string piece;
+	int money;
+	vector<Property> properties;
+
+public:
+
+	Player(string, string, int);
+	bool hasMonopoly(Property);
+	void addHouse();
 
 };
 
