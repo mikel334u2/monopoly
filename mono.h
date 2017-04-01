@@ -17,15 +17,27 @@ class Property{
 
 private:
 
-	string typeOfProperty;
-	int price;
-	int rent;
+	string propertyColor;
+	int location;
+	int buyPrice;
+
+	int initialRent;
+	int oneHouseRent;
+	int twoHouseRent;
+	int threeHouseRent;
+	int fourHouseRent;
+	int hotelRent;
+	
 	int numberOfHouses;
 	int housePrices;
+
+	bool isOwned;
 
 public:
 
 	Property();
+
+	int rentCost();
 
 };
 
