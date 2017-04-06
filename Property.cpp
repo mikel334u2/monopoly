@@ -6,51 +6,67 @@
  */
 
 #include "mono.h"
+#include <string>
+#include <iostream>
+#include <vector>
+using namespace std;
 
-Property::Property(int location, int buyPrice, int initialRent, int oneHouseRent, int twoHouseRent
-	int threeHouseRent, int fourHouseRent, int hotelRent, int numberOfHouses, int housePrices,
-	bool isOwned, bool inMonopoly)
-{
-	this.location = location;
-	this.buyPrice = buyPrice;
-
-	rentAmounts[0] = initialRent;
-	rentAmounts[1] = oneHouseRent;
-	rentAmounts[2] = twoHouseRent;
-	rentAmounts[3] = threeHouseRent;
-	rentAmounts[4] = fourHouseRent;
-	rentAmounts[5] = hotelHouseRent;
-
-	this.numberOfHouses = numberOfHouses;
-	this.isOwned = isOwned;
-	this.inMonopoly = inMonopoly;
+Property::Property(string n, string c, int l, int p, int hp, int r0, int r1, int r2, int r3, int r4, int r5){
+	name = n;
+	color = c;
+	location = l;
+	price = p;
+	housePrice = hp;
+	rent[0] = r0;
+	rent[1] = r1;
+	rent[2] = r2;
+	rent[3] = r3;
+	rent[4] = r4;
+	rent[5] = r5;
+	nHouses = 0;
+	isOwned = false;
+	inMonopoly = false;
 }
 
-int rentCost()
-{
-	if(!(inMonopoly))
-		return rentAmounts[0];
+string Property::getName(){
+	return name;
+}
 
-	else
-	{
-		if(numberOfHouses == 0)
-			return rentAmounts[0] * 2;
+string Property::getColor(){
+	return color;
+}
 
-		else if(numberOfHouses == 1)
-			return rentAmounts[1]
+int Property::getLocation(){
+	return location;
+}
 
-		else if(numberOfHouses == 2)
-			return rentAmounts[2]
+int Property::getPrice(){
+	return price;
+}
 
-		else if(numberOfHouses == 3)
-			return rentAmounts[3]
+int Property::getHousePrice(){
+	return housePrice;
+}
 
-		else if(numberOfHouses == 4)
-			return rentAmounts[4]
+int Property::getRent(){
+	if (!isOwned) return 0;
+	else if (inMonopoly && nHouses == 0) return rent[nHouses] * 2;
+	return rent[nHouses];
+}
 
-		else if(numberOfHouses == 5)
-			return rentAmounts[5]
-	}
+int Property::getHouses(){
+	return nHouses;
+}
 
-	return 0;
+
+void Property::setHouses(int h){  // if int h is b/w 0 and 5 inclusive
+	nHouses = h;
+}
+
+void Property::changeOwned(){
+	isOwned = (isOwned) ? false : true;
+}
+
+void Property::changeMonopoly(){
+	inMonopoly = (inMonopoly) ? false : true;
 }
