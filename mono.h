@@ -17,15 +17,28 @@ class Property{
 
 private:
 
-	string typeOfProperty;
+	string name;
+	string color;
+	int location;
 	int price;
-	int rent;
-	int numberOfHouses;
-	int housePrices;
+	int housePrice;
+	int rent[6];
+	int nHouses;
+	bool isOwned, inMonopoly;
 
 public:
 
-	Property();
+	Property(string, string, int, int, int, int, int, int, int, int, int);
+	string getName();
+	string getColor();
+	int getLocation();
+	int getPrice();
+	int getHousePrice();
+	int getRent();
+	int getHouses();
+	void setHouses(int);
+	void changeOwned();
+	void changeMonopoly();
 
 };
 
@@ -36,14 +49,20 @@ private:
 	string name;
 	string piece;
 	int money;
+	int currLoc;
 	vector<Property> properties;
+	bool isActive;
 
 public:
 
-	Player(string, string, int);
-	bool hasMonopoly(Property);
+	Player(string, string);
+	string getName();
+	string getPiece();
+	int getMoney();
+	bool hasMonopoly();
 	void addHouse();
-
+	void addProperty(Property);
+	void setCurrLoc(int);
 };
 
 
