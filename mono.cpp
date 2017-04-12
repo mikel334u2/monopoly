@@ -70,9 +70,9 @@ int main(){
 		cout << names[i] << " is " << playPieces[i] << "." << endl;
 	}
 
-	vector<Player> players;
+	vector<Player*> players;
 	for (int i = 0; i < nPlayers; i++){
-		Player player(names[i],playPieces[i]);
+		Player* player = new Player(names[i],playPieces[i]);
 		players.push_back(player);
 	}
 
@@ -104,14 +104,54 @@ int main(){
 	// for (unsigned int i = 0; i < players.size(); i++){}
 
 	int turn = 0;
+	int location;
+	bool doubles = false;
+	bool passGo;
+	Player* currPlayer;
 
 	while (true){
+
+		currPlayer = players[turn];
+
+//		if (currPlayer->getJail()){
+//
+//			// pay or roll (dom make a boolean for this)
+//
+//			if (!doubles){
+//				continue;
+//			}
+//			else {
+//
+//			}
+//			turn = (turn + 1) % nPlayers;
+//		}
+
+		int dice1 = rollDye();
+		int dice2 = rollDye();
+		if (dice1 == dice2){
+			bool doubles = true;
+		}
+
+		passGo = currPlayer->addLocation(dice1 + dice2);
+		location = currPlayer->getLocation();
+
+		switch (location){
+
+		case 0:
+			break;
+
+		case 1:
+			break;
+
+		default:
+			break;
+		}
 
 		// temporary code
 		players.erase(players.begin() + players.size() - 1);
 
 		if (players.size() == 1){
-			cout << "\nThe winner is " << players[0].getName() << "!" << endl;
+			cout << "\nThe winner is " << players[0]->getName() << "!" << endl;
 			exit(EXIT_SUCCESS);
 		}
 
@@ -122,5 +162,4 @@ int main(){
 int rollDye() {
 	return rand() % 6 + 1;
 }
-
 

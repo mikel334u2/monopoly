@@ -13,6 +13,8 @@
 #include <vector>
 using namespace std;
 
+int rollDye();
+
 class Property{
 
 private:
@@ -49,9 +51,11 @@ private:
 	string name;
 	string piece;
 	int money;
-	int currLoc;
-	vector<Property> properties;
-	bool isActive;
+	int location;
+	// vector<Property> properties;
+	// bool isActive;
+	bool inJail;
+	int jailTime;
 
 public:
 
@@ -62,7 +66,12 @@ public:
 	bool hasMonopoly();
 	void addHouse();
 	void addProperty(Property);
-	void setCurrLoc(int);
+	int getLocation();
+	bool getJail();
+	int getJailTime();
+	void setJailTime(int);
+	bool addLocation(int);
+	void setLocation(int);
 };
 
 

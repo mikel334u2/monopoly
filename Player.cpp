@@ -38,8 +38,10 @@ Player::Player(string n, string p){
 	name = n;
 	piece = p;
 	money = 1500;
-	currLoc = 0;
-	//vector<Property> properties;
+	location = 0;
+	inJail = false;
+	jailTime = 0;
+	// vector<Property> properties;
 }
 
 // bool Player::hasMonopoly(){}
@@ -56,6 +58,31 @@ int Player::getMoney(){
 	return money;
 }
 
-void Player::setCurrLoc(int addSpaces){
-	currLoc = (currLoc + addSpaces) % 32;
+int Player::getLocation(){
+	return location;
+}
+
+bool Player::getJail(){
+	return inJail;
+}
+
+int Player::getJailTime(){
+	return jailTime;
+}
+
+void Player::setJailTime(int time){
+	jailTime = time;
+}
+
+void Player::setLocation(int loc){
+	location = loc;
+}
+
+bool Player::addLocation(int addSpaces){
+	int prevLoc = location;
+	location = (location + addSpaces) % 32;
+	if (location - prevLoc < 0){
+		return true;
+	}
+	return false;
 }
