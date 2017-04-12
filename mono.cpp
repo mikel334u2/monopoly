@@ -119,4 +119,8 @@ int main(){
 	}
 }
 
+int rollDye() {
+	return rand() % 6 + 1;
+}
+
 
