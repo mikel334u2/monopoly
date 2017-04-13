@@ -13,8 +13,6 @@
 #include <vector>
 using namespace std;
 
-int rollDye();
-
 class Property{
 
 private:
@@ -63,18 +61,23 @@ public:
 	string getName();
 	string getPiece();
 	int getMoney();
+	void setMoney(int);
+	void subtractMoney(int);
+	void addMoney(int);
 	bool hasMonopoly();
 	void addHouse();
 	void addProperty(Property);
 	int getLocation();
 	bool getJail();
+	void setJail(bool);
 	int getJailTime();
 	void setJailTime(int);
 	bool addLocation(int);
 	void setLocation(int);
 };
 
-
+int rollDye();
+bool jail(Player*, int, int);
 
 
 #endif /* MONO_H_ */
