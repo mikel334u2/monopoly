@@ -11,7 +11,7 @@
 #include <vector>
 using namespace std;
 
-Property::Property(string n, string c, int l, int p, int hp, int r0, int r1, int r2, int r3, int r4, int r5){
+Property::Property(string n, string c, int l, int p, int hp, int r0, int r1, int r2, int r3, int r4, int r5, int ownNum){
 	name = n;
 	color = c;
 	location = l;
@@ -26,6 +26,7 @@ Property::Property(string n, string c, int l, int p, int hp, int r0, int r1, int
 	nHouses = 0;
 	isOwned = false;
 	inMonopoly = false;
+	owner = ownNum;
 }
 
 string Property::getName(){
@@ -50,7 +51,8 @@ int Property::getHousePrice(){
 
 int Property::getRent(){
 	if (!isOwned) return 0;
-	else if (inMonopoly && nHouses == 0) return rent[nHouses] * 2;
+	else if(!inMonopoly) return rent[0];
+	else if (inMonopoly && nHouses == 0) return rent[0] * 2;
 	return rent[nHouses];
 }
 
@@ -58,9 +60,16 @@ int Property::getHouses(){
 	return nHouses;
 }
 
-
 void Property::setHouses(int h){  // if int h is b/w 0 and 5 inclusive
 	nHouses = h;
+}
+
+int Property::getOwner(){
+	return owner;
+}
+
+void Property::setOwner(int ownNum){
+	owner = ownNum;
 }
 
 void Property::changeOwned(){
