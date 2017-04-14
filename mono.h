@@ -11,9 +11,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-using namespace std;
-
-int rollDye();
 
 class Property{
 
@@ -27,10 +24,11 @@ private:
 	int rent[6];
 	int nHouses;
 	bool isOwned, inMonopoly;
+	int owner;
 
 public:
 
-	Property(string, string, int, int, int, int, int, int, int, int, int);
+	Property(string, string, int, int, int, int, int, int, int, int, int, int);
 	string getName();
 	string getColor();
 	int getLocation();
@@ -39,6 +37,8 @@ public:
 	int getRent();
 	int getHouses();
 	void setHouses(int);
+	int getOwner();
+	void setOwner(int);
 	void changeOwned();
 	void changeMonopoly();
 
@@ -52,7 +52,7 @@ private:
 	string piece;
 	int money;
 	int location;
-	// vector<Property> properties;
+	vector<Property> properties;
 	// bool isActive;
 	bool inJail;
 	int jailTime;
@@ -63,18 +63,24 @@ public:
 	string getName();
 	string getPiece();
 	int getMoney();
+	void setMoney(int);
+	void subtractMoney(int);
+	void addMoney(int);
 	bool hasMonopoly();
 	void addHouse();
 	void addProperty(Property);
 	int getLocation();
 	bool getJail();
+	void setJail(bool);
 	int getJailTime();
 	void setJailTime(int);
 	bool addLocation(int);
 	void setLocation(int);
 };
 
-
+int rollDye();
+bool jail(Player*, int, int);
+void landOnProperty(Property*, Player*);
 
 
 #endif /* MONO_H_ */
