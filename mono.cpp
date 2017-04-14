@@ -10,7 +10,10 @@
 #include <exception>
 #include <vector>
 #include <algorithm>
+//#include <random>
 #include "mono.h"
+#include "Player.cpp"
+#include "Property.cpp"
 using namespace std;
 
 int main(){
@@ -107,29 +110,31 @@ int main(){
 	int location;
 	bool doubles = false;
 	bool passGo;
+	bool inJail;
+	int dice1 = 0;
+	int dice2 = 0;
 	Player* currPlayer;
 
 	while (true){
 
 		currPlayer = players[turn];
 
-//		if (currPlayer->getJail()){
-//
-//			// pay or roll (dom make a boolean for this)
-//
-//			if (!doubles){
-//				continue;
-//			}
-//			else {
-//
-//			}
-//			turn = (turn + 1) % nPlayers;
-//		}
-
-		int dice1 = rollDye();
-		int dice2 = rollDye();
+		dice1 = rollDye();
+		dice2 = rollDye();
+		bool doubles = false;
 		if (dice1 == dice2){
-			bool doubles = true;
+			doubles = true;
+		}
+
+		currPlayer->setJail(true);
+		
+		inJail = jail(currPlayer, dice1, dice2);
+		cout << dice1 + dice2 << endl;
+
+		if(inJail)
+		{
+			turn = (turn + 1) % nPlayers;
+			continue;
 		}
 
 		passGo = currPlayer->addLocation(dice1 + dice2);
@@ -148,7 +153,7 @@ int main(){
 		}
 
 		// temporary code
-		players.erase(players.begin() + players.size() - 1);
+		//players.erase(players.begin() + players.size() - 1);
 
 		if (players.size() == 1){
 			cout << "\nThe winner is " << players[0]->getName() << "!" << endl;
@@ -160,6 +165,97 @@ int main(){
 }
 
 int rollDye() {
-	return rand() % 6 + 1;
+	
+	random_device rndm;
+	mt19937 generator(rndm());
+	uniform_int_distribution<> range(1, 6);
+
+	return range(generator);
 }
 
+//returns true if still in jail, false if out of jail
+//resets jail time and sets player's jail to false if released
+bool jail(Player* player, int dice1, int dice2)
+{
+	//if player is not currently in jail, ends method and turn continues normally
+	if(!(player->getJail()))
+	{
+		return false;
+	}
+
+	cout << player->getName() << " is in jail. Would you like to pay $50 or roll for doubles? (pay/roll)" << endl;
+	
+	string choice;
+	int selector = 0;
+
+	cin >> choice;
+
+	transform(choice.begin(), choice.end(), choice.begin(), ::toupper);
+
+	if(choice == "PAY")
+		selector = 1;
+
+	else if(choice == "ROLL")
+		selector = 2;
+
+	while(selector != 5)
+	{
+		switch(selector)
+		{
+			case(1):
+			{
+				player->subtractMoney(50);
+				player->setJail(false);
+				player->setJailTime(0);
+				return false;
+			}
+
+			//if choose to roll, releases player from jail if they roll doubles
+			case(2):
+			{
+				if(dice1 == dice2)
+				{
+					player->setJail(false);
+					player->setJailTime(0);
+					cout << player->getName() << " rolled doubles." << endl;
+					return false;
+				}
+
+				cout << "Doubles were not rolled. " << player->getName() << " remains in jail." << endl;
+				selector = 5;
+				break;
+			}
+
+			default:
+			{
+				cout << "Invalid input. Please select pay or roll." << endl;
+				cin >> choice;
+
+				transform(choice.begin(), choice.end(), choice.begin(), ::toupper);
+
+				if(choice == "PAY")
+					selector = 1;
+
+				else if(choice == "ROLL")
+					selector = 2;
+			}
+		}
+	}
+
+	player->setJailTime(player->getJailTime() + 1);
+	int time = player->getJailTime();
+
+	//if player is in jail 3 turns, releases them and forces them to pay $50 fine
+	if(time == 3)
+	{
+		cout << player->getName() << " spent 3 turns in jail. Prisoner fined $50. Releasing hardened convict." << endl;
+		player->setJail(false);
+		player->setJailTime(0);
+		player->subtractMoney(50);
+		return false;
+	}
+
+		
+	return true;
+
+}
