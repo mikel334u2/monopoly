@@ -9,6 +9,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
+
 using namespace std;
 
 //class Player{
@@ -32,7 +33,7 @@ using namespace std;
 //    void removeProperty();
 //    void addProperty();
 //
-//};
+//}
 
 Player::Player(string n, string p){
 	name = n;
@@ -41,7 +42,7 @@ Player::Player(string n, string p){
 	location = 0;
 	inJail = false;
 	jailTime = 0;
-	// vector<Property> properties;
+	vector<Property*> properties;
 }
 
 // bool Player::hasMonopoly(){}
@@ -60,6 +61,7 @@ int Player::getMoney(){
 
 void Player::setMoney(int mon){
 	money = mon;
+
 }
 
 void Player::subtractMoney(int loss){

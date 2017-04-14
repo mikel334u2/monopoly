@@ -10,7 +10,7 @@
 #include <exception>
 #include <vector>
 #include <algorithm>
-#include <random>
+//#include <random>
 #include "mono.h"
 #include "Player.cpp"
 #include "Property.cpp"
@@ -85,7 +85,7 @@ int main(){
 			"ATLANTIC AVENUE","VENTOR AVENUE","MARVIN GARDENS","PACIFIC AVENUE","NORTH CAROLINA AVENUE",
 			"PENNSYLVANIA AVENUE","PARK PLACE","BOARDWALK"};
 	string propertyColor[22] = {"PURPLE","PURPLE","L. BLUE","L. BLUE","L. BLUE","PINK","PINK","PINK","ORANGE",
-			"ORANGE","ORANGE","RED","RED","RED","YELLOW","YELLOW","YELLOW","GREEN","GREEN","GREEN","D. BLUE","D. BLUE"};
+			"ORANGE","ORANGE","RED","RED","RED","YELLOW","YELLOW","YELLOW","GREEN","GREEN","GREEN","D. BLUE","D. BLUE"};		
 	int propertyPrice[22] = {60,60,100,100,120,140,140,160,180,180,200,220,220,240,260,260,280,300,300,320,350,400};
 	int propertyHousePrice[22] = {50,50,50,50,50,100,100,100,100,100,100,150,150,150,150,150,150,200,200,200,200,200};
 	int initialRent[22] = {2,4,6,6,8,10,10,12,14,14,16,18,18,20,22,22,24,26,26,28,35,50};
@@ -94,12 +94,14 @@ int main(){
 	int threeHouseRent[22] = {90,180,270,270,300,450,450,500,550,550,600,700,700,750,800,800,850,900,900,1000,1100,1400};
 	int fourHouseRent[22] = {160,320,400,400,450,625,625,700,750,750,800,875,875,925,975,975,1025,1100,1100,1200,1300,1700};
 	int fiveHouseRent[22] = {250,450,550,550,600,750,750,900,950,950,1000,1050,1050,1100,1150,1150,1200,
-			1275,1275,1400,1500,2000};
+			1275,1275,1400,1500,2000};		
 
-	vector<Property> properties;
+	int propertyLocation[22] = {1,2,4,6,7,9,10,11,13,14,15,17,18,19,21,22,23,25,26,27,29,31};		
+
+	vector<Property*> properties;
 	for (int i = 0; i < 22; i++){
-		Property property(propertyNames[i],propertyColor[i],i,propertyPrice[i],propertyHousePrice[i],initialRent[22],
-				oneHouseRent[i],twoHouseRent[i],threeHouseRent[i],fourHouseRent[i],fiveHouseRent[i]);
+		Property* property = new Property(propertyNames[i],propertyColor[i],propertyLocation[i],propertyPrice[i],propertyHousePrice[i],initialRent[i],
+			oneHouseRent[i],twoHouseRent[i],threeHouseRent[i],fourHouseRent[i],fiveHouseRent[i], 0);
 		properties.push_back(property);
 	}
 
@@ -137,6 +139,12 @@ int main(){
 		passGo = currPlayer->addLocation(dice1 + dice2);
 		location = currPlayer->getLocation();
 
+		if(passGo)
+		{
+			currPlayer->addMoney(200);
+			cout<< currPlayer->getName() << " passed GO. Collect $200." << endl;
+		}
+
 		switch (location){
 
 		case 0:
@@ -145,7 +153,94 @@ int main(){
 		case 1:
 			break;
 
-		default:
+		case 2:
+			break;
+			
+		case 3:
+			break;
+		
+		case 4:
+			break;
+		
+		case 5:
+			break;
+		
+		case 6:
+			break;
+		
+		case 7:
+			break;
+		
+		case 8:
+			break;
+		
+		case 9:
+			break;
+		
+		case 10:
+			break;
+		
+		case 11:
+			break;
+		
+		case 12:
+			break;
+		
+		case 13:
+			break;
+		
+		case 14:
+			break;
+		
+		case 15:
+			break;
+		
+		case 16:
+			break;
+		
+		case 17:
+			break;
+		
+		case 18:
+			break;
+		
+		case 19:
+			break;
+		
+		case 20:
+			break;
+		
+		case 21:
+			break;
+		
+		case 22:
+			break;
+		
+		case 23:
+			break;
+		
+		case 24:
+			break;
+		
+		case 25:
+			break;
+		
+		case 26:
+			break;
+		
+		case 27:
+			break;
+		
+		case 28:
+			break;
+		
+		case 29:
+			break;
+		
+		case 30:
+			break;
+		
+		case 31:
 			break;
 		}
 
@@ -163,11 +258,12 @@ int main(){
 
 int rollDye() {
 	
-	random_device rndm;
+	/*random_device rndm;
 	mt19937 generator(rndm());
 	uniform_int_distribution<> range(1, 6);
 
-	return range(generator);
+	return range(generator);*/
+	return 5;
 }
 
 //returns true if still in jail, false if out of jail
@@ -251,8 +347,11 @@ bool jail(Player* player, int dice1, int dice2)
 		player->subtractMoney(50);
 		return false;
 	}
-
-		
+	
 	return true;
+}
+
+void landOnProperty(Property* property, Player* player)
+{
 
 }
