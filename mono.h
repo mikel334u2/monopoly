@@ -52,7 +52,7 @@ private:
 	string piece;
 	int money;
 	int location;
-	vector<Property> properties;
+	vector<Property*> properties;
 	// bool isActive;
 	bool inJail;
 	int jailTime;
@@ -68,7 +68,7 @@ public:
 	void addMoney(int);
 	bool hasMonopoly();
 	void addHouse();
-	void addProperty(Property);
+	void addProperty(Property*);
 	int getLocation();
 	bool getJail();
 	void setJail(bool);
@@ -80,7 +80,7 @@ public:
 
 int rollDye();
 bool jail(Player*, int, int);
-void landOnProperty(Property*, Player*);
+void landOnProperty(Property*, Player*, int);
 
 
 #endif /* MONO_H_ */

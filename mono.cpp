@@ -350,7 +350,40 @@ bool jail(Player* player, int dice1, int dice2)
 	return true;
 }
 
-void landOnProperty(Property* property, Player* player)
+void landOnProperty(Property* property, Player* player, int turn, vector<Player*> players)
 {
+	int rent = property->getRent();
+	string choice;
 
+	if(rent == 0)
+	{
+		cout << property->getName() << " is not owned. The price is $" << property->getPrice() << ". Would you like to buy " << property->getName() << "? (Y/N)" << endl;
+		cin >> choice;
+
+		if(choice == "Y" || choice == "y")
+		{
+			int cost = property->getPrice();
+			player->subtractMoney(cost);
+			property->setOwner(turn);
+			player->addProperty(property);
+			return;
+		}
+
+		else
+		{
+			cout << property->getName() << " was not bought." << endl;
+			return;
+		}
+	}
+
+	else
+	{
+		int owner = property->getOwner();
+
+		cout << players[owner]->getName() << " owns " << property->getName() << ". You pay " << players[owner]->getName() << " $" << rent << "." << endl;
+
+		players[owner]->addMoney(rent);
+		player->subtractMoney(rent);
+	}
+	return;
 }

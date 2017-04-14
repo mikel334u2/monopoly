@@ -104,3 +104,8 @@ bool Player::addLocation(int addSpaces){
 	}
 	return false;
 }
+
+void Player::addProperty(Property* property)
+{
+	properties.push_back(property);
+}
