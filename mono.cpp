@@ -10,7 +10,7 @@
 #include <exception>
 #include <vector>
 #include <algorithm>
-//#include <random>
+#include <random>
 #include "mono.h"
 #include "Player.cpp"
 #include "Property.cpp"
@@ -258,12 +258,11 @@ int main(){
 
 int rollDye() {
 	
-	/*random_device rndm;
+	random_device rndm;
 	mt19937 generator(rndm());
 	uniform_int_distribution<> range(1, 6);
 
-	return range(generator);*/
-	return 5;
+	return range(generator);
 }
 
 //returns true if still in jail, false if out of jail
