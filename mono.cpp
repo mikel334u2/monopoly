@@ -11,6 +11,8 @@
 #include <vector>
 #include <algorithm>
 #include "mono.h"
+#include "Player.cpp"
+#include "Property.cpp"
 using namespace std;
 
 int main(){
@@ -107,29 +109,25 @@ int main(){
 	int location;
 	bool doubles = false;
 	bool passGo;
+	bool inJail;
 	Player* currPlayer;
 
 	while (true){
 
 		currPlayer = players[turn];
 
-//		if (currPlayer->getJail()){
-//
-//			// pay or roll (dom make a boolean for this)
-//
-//			if (!doubles){
-//				continue;
-//			}
-//			else {
-//
-//			}
-//			turn = (turn + 1) % nPlayers;
-//		}
-
 		int dice1 = rollDye();
 		int dice2 = rollDye();
 		if (dice1 == dice2){
 			bool doubles = true;
+		}
+
+		inJail = jail(currPlayer, dice1, dice2);
+
+		if(inJail)
+		{
+			turn = (turn + 1) % nPlayers;
+			continue;
 		}
 
 		passGo = currPlayer->addLocation(dice1 + dice2);
@@ -163,3 +161,52 @@ int rollDye() {
 	return rand() % 6 + 1;
 }
 
+//needs updating based on how player's choice of pay or roll will be put into method
+//returns true if still in jail, false if out of jail
+//resets jail time and sets player's jail to false
+bool jail(Player* player, int dice1, int dice2)
+{
+	//if player is not currently in jail, ends method and turn continues normally
+	if(!(player->getJail()))
+	{
+		return false;
+	}
+
+	//pay assumed to be true if they decide to pay, false if rolling
+	//not sure how method will get receiver's choice so assuming true for now
+	bool pay = true;
+
+	if(pay)
+	{
+		player->subtractMoney(50);
+		player->setJail(false);
+		player->setJailTime(0);
+		return false;
+	}
+
+	//if choose to roll, releases player from jail if they roll doubles
+	else if(!pay)
+	{
+		if(dice1 == dice2)
+		{
+			player->setJail(false);
+			player->setJailTime(0);
+			return false;
+		}
+	}
+
+	player->setJailTime(player->getJailTime() + 1);
+	int time = player->getJailTime();
+
+	//if player is in jail 3 turns, releases them and forces them to pay $50 fine
+	if(time == 3)
+	{
+		player->setJail(false);
+		player->setJailTime(0);
+		player->subtractMoney(50);
+		return false;
+	}
+
+	return true;
+
+}
