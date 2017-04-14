@@ -10,7 +10,7 @@
 #include <exception>
 #include <vector>
 #include <algorithm>
-//#include <random>
+#include <random>
 #include "mono.h"
 #include "Player.cpp"
 #include "Property.cpp"
@@ -125,11 +125,8 @@ int main(){
 		if (dice1 == dice2){
 			doubles = true;
 		}
-
-		currPlayer->setJail(true);
 		
 		inJail = jail(currPlayer, dice1, dice2);
-		cout << dice1 + dice2 << endl;
 
 		if(inJail)
 		{
