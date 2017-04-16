@@ -14,7 +14,7 @@ int main(){
 	int nPlayers = 0;
 
 	cout << "Welcome to Monopoly!" << endl;
-	cout << "Please input the number of players (2-4): ";
+	cout << "PLEASE INPUT THE NUMBER OF PLAYERS (2-4): ";
 
 	while (true){
 		cin >> nPlayers;
@@ -24,7 +24,7 @@ int main(){
 			nPlayers = 0;
 		}
 		if (nPlayers > 4 || nPlayers < 2){
-			cout << "Invalid input. Please try again: ";
+			cout << "INVALID INPUT. PLEASE TRY AGAIN:  ";
 		}
 		else break;
 	}
@@ -33,7 +33,7 @@ int main(){
 	const string pcs[] = {"TERRIER","IRON","SHIP","CAR","POT","ROBOT","THIMBLE","PHONE"};
 	vector<string> pieces(pcs, pcs + sizeof(pcs) / sizeof(pcs[0]));
 
-	cout << "Please enter the names of the players: " << endl;
+	cout << "PLEASE ENTER THE NAMES OF THE PLAYERS: " << endl;
 	for (int i = 0; i < nPlayers; i++){
 		cout << i+1 << ". ";
 		string input;
@@ -41,7 +41,7 @@ int main(){
 		names.push_back(input);
 	}
 
-	cout << "\nPossible pieces: ";
+	cout << "\nPOSSIBLE PIECES: ";
 	for (unsigned int i = 0; i < pieces.size(); i++){
 		if (i < 7) cout << pieces[i] << ", ";
 		else cout << pieces[i] << endl;
@@ -51,20 +51,24 @@ int main(){
 	for(int i = 0; i < nPlayers; i++){
 		string input = "";
 		while(find(pieces.begin(), pieces.end(), input) == pieces.end()){
-			cout << names[i] << ", please choose your piece: ";
+			cout << names[i] << ", PLEASE CHOOSE YOUR PIECE: ";
 			cin >> input;
 			transform(input.begin(), input.end(), input.begin(), ::toupper);
 			if(find(pieces.begin(), pieces.end(), input) == pieces.end()){
-				cout << "Invalid piece, please try again." << endl;
+				cout << "INVALID PIECE, PLEASE TRY AGAIN." << endl;
 			}
 		}
 		playPieces.push_back(input);
 		pieces.erase(remove(pieces.begin(), pieces.end(), input), pieces.end());
 	}
 
+	cout << endl;
+
 	for (int i = 0; i < nPlayers; i++){
 		cout << names[i] << " is " << playPieces[i] << "." << endl;
 	}
+
+	cout << endl;
 
 	vector<Player*> players;
 	for (int i = 0; i < nPlayers; i++){
@@ -105,37 +109,46 @@ int main(){
 	bool passGo;
 	int dice1 = 0;
 	int dice2 = 0;
+	int total = 0;
 	Player* currPlayer;
 	Property* property;
 
 	while (true){
-
+		doubles = false;
 		currPlayer = players[turn];
 
 		// would you like to buy/sell property/houses or roll dice?
 
 		dice1 = rollDye();
 		dice2 = rollDye();
-		doubles = (dice1 == dice2) ? true : false;
+		total = dice1 + dice2;
+		currPlayer->setLocation(total);
 
-		if (jail(currPlayer, dice1, dice2)){
-			turn = (turn + 1) % nPlayers;
-			continue;
-		}
-		if (currPlayer->getJail()){
-			doubles = false;
-			currPlayer->changeJail();
+		cout << "DICE 1: " << dice1 << ",DICE 2: " << dice2 << endl;
+
+		if(dice1 == dice2){
+			doubles = true;
 		}
 
-		if (doubles) currPlayer->setDoubleTime(currPlayer->getDoubleTime()+1);
-		if (currPlayer->getDoubleTime() >= 3){
-			currPlayer->changeJail();
-			currPlayer->setLocation(7);
-			currPlayer->setDoubleTime(0);
-			turn = (turn + 1) % nPlayers;
-			continue;
-		}
 
+//		if (jail(currPlayer, dice1, dice2)){
+//			turn = (turn + 1) % nPlayers;
+//			continue;
+//		}
+//		if (currPlayer->getJail()){
+//			doubles = false;
+//			currPlayer->changeJail();
+//		}
+//
+//		if (doubles) currPlayer->setDoubleTime(currPlayer->getDoubleTime()+1);
+//		if (currPlayer->getDoubleTime() >= 3){
+//			currPlayer->changeJail();
+//			currPlayer->setLocation(7);
+//			currPlayer->setDoubleTime(0);
+//			turn = (turn + 1) % nPlayers;
+//			continue;
+//		}
+//
 //		passGo = currPlayer->addLocation(dice1 + dice2);
 //		location = currPlayer->getLocation();
 //		if (passGo){
@@ -143,7 +156,7 @@ int main(){
 //			cout<< currPlayer->getName() << " passed GO. Collect $200." << endl;
 //		}
 
-		switch (location){
+		switch (currPlayer->getLocation()){
 
 		case 0:
             cout << "Passed GO. Collect $200." << endl;
@@ -314,7 +327,11 @@ int main(){
 			exit(EXIT_SUCCESS);
 		}
 
-		if (doubles) continue;
+		if(doubles){
+			cout << "You rolled doubles. Go again!" << endl << endl;
+		} else{
+			cout << "End of " << currPlayer->getName() << "'s turn." << endl << endl;
+		}
 
 		turn = (turn + 1) % nPlayers;
 	}
@@ -324,18 +341,6 @@ int main(){
 int rollDye() {
 	return rand() % 6 + 1;
 }
-
-// C++11 CODE ---------------------------
-//int rollDye() {
-//
-//	random_device rndm;
-//	mt19937 generator(rndm());
-//	uniform_int_distribution<> range(1, 6);
-//
-//	return range(generator);
-//}
-
-
 
 // returns true if still in jail, false if out of jail
 // resets jail time and sets player's jail to false if released

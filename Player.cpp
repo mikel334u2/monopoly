@@ -94,7 +94,8 @@ void Player::setDoubleTime(int time){
 }
 
 void Player::setLocation(int loc){
-	location = loc;
+    int temp = this->location;
+	location = (temp + loc) % 32;
 }
 
 bool Player::addLocation(int addSpaces){
