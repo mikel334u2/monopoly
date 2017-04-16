@@ -145,6 +145,9 @@ int main(){
 
 		currPlayer = players[turn];
 
+		string input;
+		cout << currPlayer->getName() << "'s turn. Press ENTER";
+		cin >> input;
 		// would you like to buy/sell property/houses or roll dice?
 
 		// roll dice, determine doubles
@@ -193,6 +196,7 @@ int main(){
 
 		// Go
 		case 0:
+			cout << "You're on GO" << endl;
 			break;
 
 		// Mediterranean Ave
@@ -203,122 +207,175 @@ int main(){
 
 		// Baltic Ave
 		case 2:
+			property = properties[1];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
 		// Income Tax
 		case 3:
+			cout << "Income Tax. Pay $200." << endl;
+			currPlayer->subtractMoney(200);
 			break;
 
 		// Oriental Ave
 		case 4:
+			property = properties[2];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
 		// Comm Chest
 		case 5:
+			cout << "Community Chest." << endl;
 			break;
 
 		// Vermont Ave
 		case 6:
+			property = properties[3];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
 		// Connecticut Ave
 		case 7:
+			property = properties[4];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
 		// Jail
 		case 8:
+			cout << "JAIL." << endl;
 			break;
 
 		// St. Charles Pl
 		case 9:
+			property = properties[5];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
 		// States Ave
 		case 10:
+			property = properties[6];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
 		// Virginia Ave
 		case 11:
+			property = properties[7];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
 		// Chance
 		case 12:
+			cout << "Chance." << endl;
 			break;
 
 		// St. James Pl
 		case 13:
+			property = properties[8];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
 		// Tennessee Ave
 		case 14:
+			property = properties[9];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
 		// NY Ave
 		case 15:
+			property = properties[10];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
 		// Free Parking
 		case 16:
+			cout << "FREE PaRkInG!!!1!" << endl;
 			break;
 
 		// Kentucky Ave
 		case 17:
+			property = properties[11];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
 		// Indiana Ave
 		case 18:
+			property = properties[12];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
 		// Illinois Ave
 		case 19:
+			property = properties[13];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
 		// Comm Chest
 		case 20:
+			cout << "Community Chest." << endl;
 			break;
 
 		// Atlantic Ave
 		case 21:
+			property = properties[14];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
 		// Ventor Ave
 		case 22:
+			property = properties[15];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
 		// Marvin Gardens
 		case 23:
+			property = properties[16];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
 		// Go to Jail
 		case 24:
+			cout << "GO TO JAIL." << endl;
 			break;
 
 		// Pacific Ave
 		case 25:
+			property = properties[17];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
 		// NC Ave
 		case 26:
+			property = properties[18];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
 		// Penn Ave
 		case 27:
+			property = properties[19];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
 		// Luxury Tax
 		case 28:
+			cout << "Luxury Tax. Pay $200." << endl;
+			currPlayer->subtractMoney(200);
 			break;
 
 		// Park Place
 		case 29:
+			property = properties[20];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
 		// Chance
 		case 30:
+			cout << "Chance." << endl;
 			break;
 
 		// Boardwalk
 		case 31:
+			property = properties[21];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
 		// should never happen
@@ -327,6 +384,7 @@ int main(){
 			exit(EXIT_SUCCESS);
 			break;
 		}
+
 
 		// determines if the player's properties are part of monopoly
 		monopoly(currPlayer->getProperties());
@@ -473,3 +531,74 @@ void monopoly(vector<Property*> properties){
 	// and (for red specifically) if occur = 3, inMonopoly = true for all red ones
 
 }
+
+/*
+string communityChest[6] = {"Advance to Go (Collect $200)", "Bank error in your favor – Collect $200",
+			 "Doctor's fees {fee} – Pay $50", "Income tax refund – Collect $20",
+			 "Pay hospital fees of $100",  "You have won second prize in a beauty contest – Collect $10"};
+string chance[5] = {"Advance to Go (Collect $200)", "Pay poor tax of $15",
+			 "Your building {and} loan matures – Collect $150",  "You have won a crossword competition - Collect $100",
+		         "Bank pays you dividend of $50"};
+*/
+
+//void communityChest(Player* player) {
+//	int randNum = rand() % 6;
+//
+//	string communityChest[6] = {"Advance to Go (Collect $200)", "Bank error in your favor – Collect $200",
+//				 "Doctor's fees {fee} – Pay $50", "Income tax refund – Collect $20",
+//				 "Pay hospital fees of $100",  "You have won second prize in a beauty contest – Collect $10"};
+//	cout << communityChest[randNum] << endl;
+//	if(randNum == 0) {
+//		// increase player's money by 200
+//		player.addMoney(200);
+//	}
+//	else if(randNum == 1) {
+//		// increase player's money by 200
+//		player.addMoney(200);
+//	}
+//	else if(randNum == 2) {
+//		// decrease player's money by 50
+//		example.subtractMoney(50);
+//	}
+//
+//	else if(randNum == 3) {
+//		// increase player's money by 20
+//		example.addMoney(20);
+//	}
+//
+//	else if(randNum == 4) {
+//		// decrease player's money by 100
+//		example.subtractMoney(100);
+//	}
+//	else {
+//		// increase player's money by 10
+//		example.addMoney(10);
+//	}
+//}
+//
+//void chance(Player example) {
+//	int randNum = rand() % 5;
+//	cout << communityChest[randNum] << endl;
+//	if(randNum == 0) {
+//		// increase player's money by 200
+//		example.addMoney(200);
+//	}
+//	else if(randNum == 1) {
+//		// decrease player's money by 15
+//		example.subtractMoney(15);
+//	}
+//	else if(randNum == 2) {
+//		// increase player's money by 150
+//		example.addMoney(150);
+//	}
+//
+//	else if(randNum == 3) {
+//		// increase player's money by 100
+//		example.addMoney(100);
+//	}
+//
+//	else {
+//		// increase player's money by 50
+//		example.addMoney(50);
+//	}
+//}
