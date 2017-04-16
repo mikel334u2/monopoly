@@ -1,16 +1,12 @@
-/*
- * mono.cpp
- *
- *  Created on: Mar 25, 2017
- *      Author: mikel
- */
-
 #include <iostream>
 #include <string>
 #include <exception>
 #include <vector>
 #include <algorithm>
+//#include <random> --------------------------
 #include "mono.h"
+//#include "Player.cpp" --------------------------
+//#include "Property.cpp" --------------------------
 using namespace std;
 
 int main(){
@@ -93,9 +89,9 @@ int main(){
 	int fiveHouseRent[22] = {250,450,550,550,600,750,750,900,950,950,1000,1050,1050,1100,1150,1150,1200,
 			1275,1275,1400,1500,2000};
 
-	vector<Property> properties;
+	vector<Property*> properties;
 	for (int i = 0; i < 22; i++){
-		Property property(propertyNames[i],propertyColor[i],i,propertyPrice[i],propertyHousePrice[i],initialRent[22],
+		Property* property = new Property(propertyNames[i],propertyColor[i],i,propertyPrice[i],propertyHousePrice[i],initialRent[22],
 				oneHouseRent[i],twoHouseRent[i],threeHouseRent[i],fourHouseRent[i],fiveHouseRent[i]);
 		properties.push_back(property);
 	}
@@ -107,33 +103,45 @@ int main(){
 	int location;
 	bool doubles = false;
 	bool passGo;
+	int dice1 = 0;
+	int dice2 = 0;
 	Player* currPlayer;
+	Property* property;
 
 	while (true){
 
 		currPlayer = players[turn];
 
-//		if (currPlayer->getJail()){
-//
-//			// pay or roll (dom make a boolean for this)
-//
-//			if (!doubles){
-//				continue;
-//			}
-//			else {
-//
-//			}
-//			turn = (turn + 1) % nPlayers;
-//		}
+		// would you like to buy/sell property/houses or roll dice?
 
-		int dice1 = rollDye();
-		int dice2 = rollDye();
-		if (dice1 == dice2){
-			bool doubles = true;
+		dice1 = rollDye();
+		dice2 = rollDye();
+		doubles = (dice1 == dice2) ? true : false;
+
+		if (jail(currPlayer, dice1, dice2)){
+			turn = (turn + 1) % nPlayers;
+			continue;
+		}
+		if (currPlayer->getJail()){
+			doubles = false;
+			currPlayer->changeJail();
+		}
+
+		if (doubles) currPlayer->setDoubleTime(currPlayer->getDoubleTime()+1);
+		if (currPlayer->getDoubleTime() >= 3){
+			currPlayer->changeJail();
+			currPlayer->setLocation(7);
+			currPlayer->setDoubleTime(0);
+			turn = (turn + 1) % nPlayers;
+			continue;
 		}
 
 		passGo = currPlayer->addLocation(dice1 + dice2);
 		location = currPlayer->getLocation();
+		if (passGo){
+			currPlayer->addMoney(200);
+			cout<< currPlayer->getName() << " passed GO. Collect $200." << endl;
+		}
 
 		switch (location){
 
@@ -141,25 +149,225 @@ int main(){
 			break;
 
 		case 1:
+			property = properties[0];
+			landOnProperty(property, currPlayer, turn, players);
+			break;
+
+		case 2:
+			break;
+
+		case 3:
+			break;
+
+		case 4:
+			break;
+
+		case 5:
+			break;
+
+		case 6:
+			break;
+
+		case 7:
+			break;
+
+		case 8:
+			break;
+
+		case 9:
+			break;
+
+		case 10:
+			break;
+
+		case 11:
+			break;
+
+		case 12:
+			break;
+
+		case 13:
+			break;
+
+		case 14:
+			break;
+
+		case 15:
+			break;
+
+		case 16:
+			break;
+
+		case 17:
+			break;
+
+		case 18:
+			break;
+
+		case 19:
+			break;
+
+		case 20:
+			break;
+
+		case 21:
+			break;
+
+		case 22:
+			break;
+
+		case 23:
+			break;
+
+		case 24:
+			break;
+
+		case 25:
+			break;
+
+		case 26:
+			break;
+
+		case 27:
+			break;
+
+		case 28:
+			break;
+
+		case 29:
+			break;
+
+		case 30:
+			break;
+
+		case 31:
 			break;
 
 		default:
+			cout << "Error: Unreachable?" << endl;
+			exit(EXIT_SUCCESS);
 			break;
 		}
 
+		monopoly(currPlayer->getProperties());
+
 		// temporary code
-		players.erase(players.begin() + players.size() - 1);
+		// players.erase(players.begin() + players.size() - 1);
 
 		if (players.size() == 1){
 			cout << "\nThe winner is " << players[0]->getName() << "!" << endl;
 			exit(EXIT_SUCCESS);
 		}
 
+		if (doubles) continue;
+
 		turn = (turn + 1) % nPlayers;
 	}
 }
 
+// C++98 CODE ---------------------------
 int rollDye() {
 	return rand() % 6 + 1;
 }
 
+// C++11 CODE ---------------------------
+//int rollDye() {
+//
+//	random_device rndm;
+//	mt19937 generator(rndm());
+//	uniform_int_distribution<> range(1, 6);
+//
+//	return range(generator);
+//}
+
+
+
+// returns true if still in jail, false if out of jail
+// resets jail time and sets player's jail to false if released
+bool jail(Player* player, int dice1, int dice2){
+
+	// if player is not currently in jail, ends method and turn continues normally
+	if (!player->getJail()) return false;
+
+	if (player->getJailTime() < 2){
+
+		cout << player->getName() << " is in jail. Would you like to pay $50 or roll for doubles? (pay/roll)" << endl;
+		string input;
+		do{
+			cin >> input;
+			transform(input.begin(), input.end(), input.begin(), ::toupper);
+			if (input != "PAY" && input != "ROLL") cout << "Invalid choice. Please choose either pay or roll." << endl;
+		} while (input != "PAY" && input != "ROLL");
+
+		if (input == "PAY"){
+			player->subtractMoney(50);
+			player->setJailTime(0);
+			return false;
+		}
+		if (dice1 == dice2){
+			player->setJailTime(0);
+			cout << player->getName() << " rolled doubles." << endl;
+			return false;
+		}
+		cout << "Doubles were not rolled. " << player->getName() << " remains in jail." << endl;
+		player->setJailTime(player->getJailTime()+1);
+		return true;
+	}
+
+	cout << player->getName() << " is in jail. Rolling dice automatically." << endl;
+	if (dice1 == dice2){
+		player->setJailTime(0);
+		cout << player->getName() << " rolled doubles." << endl;
+		return false;
+	}
+	cout << player->getName() << " spent 3 turns in jail. Prisoner fined $50. Releasing hardened convict." << endl;
+	player->setJailTime(0);
+	player->subtractMoney(50);
+	return false;
+}
+
+
+void landOnProperty(Property* property, Player* player, int turn, vector<Player*> players){
+
+	int rent = property->getRent();
+	string choice;
+
+	if (rent == 0){
+		cout << property->getName() << " is not owned. The price is $" << property->getPrice() <<
+				". Would you like to buy " << property->getName() << "? (Y/N)" << endl;
+
+		while (true){
+			cin >> choice;
+			if (choice == "Y" || choice == "y"){
+				int cost = property->getPrice();
+				player->subtractMoney(cost);
+				property->setOwner(turn);
+				player->addProperty(property);
+				break;
+			}
+			else if (choice == "N" || choice == "n"){
+				cout << property->getName() << " was not bought." << endl;
+				break;
+			}
+			else cout << "Invalid choice, choose either 'Y' or 'N'" << endl;
+		}
+	}
+	else if (turn != property->getOwner()){
+
+		int owner = property->getOwner();
+
+		cout << players[owner]->getName() << " owns " << property->getName() <<
+				". You pay " << players[owner]->getName() << " $" << rent << "." << endl;
+
+		players[owner]->addMoney(rent);
+		player->subtractMoney(rent);
+	}
+}
+
+void monopoly(vector<Property*> properties){
+
+	// scans through current properties and determines if any of them are monopolies
+	// so go through vector, find number of times, say, the color red occurs
+	// and (for red specifically) if occur = 3, inMonopoly = true for all red ones
+
+}

@@ -1,10 +1,3 @@
-/*
- * Property.cpp
- *
- *  Created on: Mar 25, 2017
- *      Author: mikel
- */
-
 #include "mono.h"
 #include <string>
 #include <iostream>
@@ -24,8 +17,8 @@ Property::Property(string n, string c, int l, int p, int hp, int r0, int r1, int
 	rent[4] = r4;
 	rent[5] = r5;
 	nHouses = 0;
-	isOwned = false;
 	inMonopoly = false;
+	owner = -1;
 }
 
 string Property::getName(){
@@ -49,7 +42,7 @@ int Property::getHousePrice(){
 }
 
 int Property::getRent(){
-	if (!isOwned) return 0;
+	if (owner < 0) return 0;
 	else if (inMonopoly && nHouses == 0) return rent[nHouses] * 2;
 	return rent[nHouses];
 }
@@ -63,10 +56,18 @@ void Property::setHouses(int h){  // if int h is b/w 0 and 5 inclusive
 	nHouses = h;
 }
 
-void Property::changeOwned(){
-	isOwned = (isOwned) ? false : true;
+int Property::getOwner(){
+	return owner;
+}
+
+void Property::setOwner(int own){
+	owner = own;
+}
+
+bool Property::getMonopoly(){
+	return inMonopoly;
 }
 
 void Property::changeMonopoly(){
-	inMonopoly = (inMonopoly) ? false : true;
+	inMonopoly = !inMonopoly;
 }

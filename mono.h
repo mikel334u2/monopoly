@@ -1,10 +1,3 @@
-/*
- * mono.h
- *
- *  Created on: Mar 25, 2017
- *      Author: mikel
- */
-
 #ifndef MONO_H_
 #define MONO_H_
 
@@ -12,8 +5,6 @@
 #include <string>
 #include <vector>
 using namespace std;
-
-int rollDye();
 
 class Property{
 
@@ -26,7 +17,8 @@ private:
 	int housePrice;
 	int rent[6];
 	int nHouses;
-	bool isOwned, inMonopoly;
+	bool inMonopoly;
+	int owner;
 
 public:
 
@@ -39,7 +31,9 @@ public:
 	int getRent();
 	int getHouses();
 	void setHouses(int);
-	void changeOwned();
+	int getOwner();
+	void setOwner(int);
+	bool getMonopoly();
 	void changeMonopoly();
 
 };
@@ -52,10 +46,12 @@ private:
 	string piece;
 	int money;
 	int location;
-	// vector<Property> properties;
+	vector<Property*> properties;
 	// bool isActive;
 	bool inJail;
 	int jailTime;
+	int doubleTime;
+	bool hasMonopoly;
 
 public:
 
@@ -63,18 +59,26 @@ public:
 	string getName();
 	string getPiece();
 	int getMoney();
-	bool hasMonopoly();
+	void setMoney(int);
+	void subtractMoney(int);
+	void addMoney(int);
 	void addHouse();
-	void addProperty(Property);
+	void addProperty(Property*);
+	vector<Property*> getProperties();
 	int getLocation();
 	bool getJail();
+	void changeJail();
 	int getJailTime();
 	void setJailTime(int);
+	int getDoubleTime();
+	void setDoubleTime(int);
 	bool addLocation(int);
 	void setLocation(int);
 };
 
-
-
+int rollDye();
+bool jail(Player*, int, int);
+void landOnProperty(Property*, Player*, int, vector<Player*>);
+void monopoly(vector<Property*>);
 
 #endif /* MONO_H_ */

@@ -1,10 +1,3 @@
-/*
- * Player.cpp
- *
- *  Created on: Mar 25, 2017
- *      Author: mikel
- */
-
 #include "mono.h"
 #include <string>
 #include <iostream>
@@ -41,7 +34,9 @@ Player::Player(string n, string p){
 	location = 0;
 	inJail = false;
 	jailTime = 0;
-	// vector<Property> properties;
+	doubleTime = 0;
+	hasMonopoly = false;
+	vector<Property*> properties;
 }
 
 // bool Player::hasMonopoly(){}
@@ -58,6 +53,18 @@ int Player::getMoney(){
 	return money;
 }
 
+void Player::setMoney(int m){
+	money = m;
+}
+
+void Player::addMoney(int m){
+	money += m;
+}
+
+void Player::subtractMoney(int m){
+	money -= m;
+}
+
 int Player::getLocation(){
 	return location;
 }
@@ -66,12 +73,24 @@ bool Player::getJail(){
 	return inJail;
 }
 
+void Player::changeJail(){
+	inJail = !inJail;
+}
+
 int Player::getJailTime(){
 	return jailTime;
 }
 
 void Player::setJailTime(int time){
 	jailTime = time;
+}
+
+int Player::getDoubleTime(){
+	return doubleTime;
+}
+
+void Player::setDoubleTime(int time){
+	doubleTime = time;
 }
 
 void Player::setLocation(int loc){
@@ -85,4 +104,12 @@ bool Player::addLocation(int addSpaces){
 		return true;
 	}
 	return false;
+}
+
+void Player::addProperty(Property* property){
+	properties.push_back(property);
+}
+
+vector<Property*> Player::getProperties(){
+	return properties;
 }
