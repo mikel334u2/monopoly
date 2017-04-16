@@ -1,10 +1,3 @@
-/*
- * boardView.cpp
- *
- *  Created on: Apr 2, 2017
- *      Author: mikel
- */
-
 #include <iostream>
 #include <string>
 #include "mono.h"
