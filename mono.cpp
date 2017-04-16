@@ -529,7 +529,47 @@ void monopoly(vector<Property*> properties){
 	// scans through current properties and determines if any of them are monopolies
 	// so go through vector, find number of times, say, the color red occurs
 	// and (for red specifically) if occur = 3, inMonopoly = true for all red ones
+    int purpleCounter;
+    int lblueCounter;
+    int pinkCounter;
+    int orangeCounter;
+    int redCounter;
+    int yellowCounter;
+    int greenCounter;
+    int dblueCounter;
 
+    for(unsigned int i = 0; i < properties.size(); i++){
+        if(properties[i]->getColor() == "PURPLE") {
+            purpleCounter++;
+        }
+        else if(properties[i]->getColor() == "L. BLUE") {
+            lblueCounter++;
+        }
+        else if(properties[i]->getColor() == "PINK") {
+            pinkCounter++;
+        }
+        else if(properties[i]->getColor() == "ORANGE") {
+            orangeCounter++;
+        }
+        else if(properties[i]->getColor() == "RED") {
+            redCounter++;
+        }
+        else if(properties[i]->getColor() == "YELLOW") {
+            yellowCounter++;
+        }
+        else if(properties[i]->getColor() == "GREEN") {
+            greenCounter++;
+        }
+        else if(properties[i]->getColor() == "D. BLUE") {
+            dblueCounter++;
+        }
+
+        if(purpleCounter == 2 || lblueCounter == 3 || pinkCounter == 3 || orangeCounter == 3 || redCounter == 3 ||
+            yellowCounter == 3 || greenCounter == 3 || dblueCounter == 2) {
+        properties[i]->changeMonopoly();
+        }
+    }
+	
 }
 
 /*
