@@ -103,9 +103,11 @@ int main(){
 	// for loop iterates through players vector
 	// for (unsigned int i = 0; i < players.size(); i++){}
 
+    string answer;
 	int turn = 0;
 	int location;
 	bool doubles = false;
+    bool start = true;
 	bool passGo;
 	int dice1 = 0;
 	int dice2 = 0;
@@ -118,11 +120,22 @@ int main(){
 		currPlayer = players[turn];
 
 		// would you like to buy/sell property/houses or roll dice?
+        cout << currPlayer->getName() << " ARE YOU READY TO START YOUR TURN (Y) ? ";
 
-		dice1 = rollDye();
-		dice2 = rollDye();
-		total = dice1 + dice2;
-		currPlayer->setLocation(total);
+        do{
+            cin >> answer;
+            if(answer == "Y" || "y"){
+                dice1 = rollDye();
+                dice2 = rollDye();
+                total = dice1 + dice2;
+                currPlayer->setLocation(total);
+                start = false;
+            } else{
+                cout << endl << endl << "NOT VALID TRY AGAIN: ";
+            }
+        } while(start);
+
+
 
 		cout << "DICE 1: " << dice1 << ",DICE 2: " << dice2 << endl;
 
@@ -148,18 +161,18 @@ int main(){
 //			turn = (turn + 1) % nPlayers;
 //			continue;
 //		}
-//
-//		passGo = currPlayer->addLocation(dice1 + dice2);
-//		location = currPlayer->getLocation();
-//		if (passGo){
-//			currPlayer->addMoney(200);
-//			cout<< currPlayer->getName() << " passed GO. Collect $200." << endl;
-//		}
+
+		passGo = currPlayer->addLocation(dice1 + dice2);
+		location = currPlayer->getLocation();
+		if (passGo){
+			currPlayer->addMoney(200);
+			cout<< currPlayer->getName() << " PASSED GO. COLLECT $200." << endl;
+		}
 
 		switch (currPlayer->getLocation()){
 
 		case 0:
-            cout << "Passed GO. Collect $200." << endl;
+            cout << "LANDED ON GO. COLLECT $200." << endl;
             currPlayer->addMoney(200);
 			break;
 
@@ -323,18 +336,17 @@ int main(){
 		// players.erase(players.begin() + players.size() - 1);
 
 		if (players.size() == 1){
-			cout << "\nThe winner is " << players[0]->getName() << "!" << endl;
+			cout << "\nTHE WINNER IS " << players[0]->getName() << "!" << endl;
 			exit(EXIT_SUCCESS);
 		}
 
 		if(doubles){
-			cout << "You rolled doubles. Go again!" << endl << endl;
+			cout << "YOU ROLLED DOUBLES. ROLL AGAIN." << endl << endl;
 		} else{
 			cout << "End of " << currPlayer->getName() << "'s turn." << endl << endl;
-		}
-
-		turn = (turn + 1) % nPlayers;
-	}
+            turn = (turn + 1) % nPlayers;
+        }
+    }
 }
 
 // C++98 CODE ---------------------------
