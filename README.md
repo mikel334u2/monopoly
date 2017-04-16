@@ -15,10 +15,12 @@ Programmers:
 - Daniel Nazarian
 
 Artist:
-- Daniel Nazarian (gimme an A)
+- Daniel Nazarian (pls A)
 
 GUI Expert:
 - Harsh Patel
+- Daniel Nazarian
+- Yasir Nemat
 
 Pixel Expert:
 - Yasir Nemat
