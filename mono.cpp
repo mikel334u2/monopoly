@@ -136,16 +136,18 @@ int main(){
 			continue;
 		}
 
-		passGo = currPlayer->addLocation(dice1 + dice2);
-		location = currPlayer->getLocation();
-		if (passGo){
-			currPlayer->addMoney(200);
-			cout<< currPlayer->getName() << " passed GO. Collect $200." << endl;
-		}
+//		passGo = currPlayer->addLocation(dice1 + dice2);
+//		location = currPlayer->getLocation();
+//		if (passGo){
+//			currPlayer->addMoney(200);
+//			cout<< currPlayer->getName() << " passed GO. Collect $200." << endl;
+//		}
 
 		switch (location){
 
 		case 0:
+            cout << "Passed GO. Collect $200." << endl;
+            currPlayer->addMoney(200);
 			break;
 
 		case 1://Mediterranean Avenue
@@ -159,7 +161,8 @@ int main(){
 			break;
 
 		case 3://Income Tax
-
+            cout << "Income Tax. Pay $200." << endl;
+            currPlayer->subtractMoney(200);
 			break;
 
 		case 4://Oriental Avenue
@@ -168,7 +171,7 @@ int main(){
 			break;
 
 		case 5://Community Chest
-
+            cout << "Community Chest." << endl;
 			break;
 
 		case 6://Vermont Avenue
@@ -182,7 +185,7 @@ int main(){
 			break;
 
 		case 8://JAIL
-
+            cout << "JAIL." << endl;
 			break;
 
 		case 9://St. Charles Place
@@ -201,7 +204,7 @@ int main(){
 			break;
 
 		case 12://Chance
-
+            cout << "Chance." << endl;
 			break;
 
 		case 13://St. James Place
@@ -220,7 +223,7 @@ int main(){
 			break;
 
 		case 16://Free Parking
-
+            cout << "FREE PaRkInG!!!1!" << endl;
 			break;
 
 		case 17://Kentucky Avenue
@@ -239,7 +242,7 @@ int main(){
 			break;
 
 		case 20://Community Chest 2
-
+            cout << "Community Chest." << endl;
 			break;
 
 		case 21://Atlantic Avenue
@@ -258,7 +261,7 @@ int main(){
 			break;
 
 		case 24://GO TO JAIL
-
+            cout << "GO TO JAIL." << endl;
 			break;
 
 		case 25://Pacific Avenue
@@ -277,7 +280,8 @@ int main(){
 			break;
 
 		case 28://Luxury Tax
-
+            cout << "Luxury Tax. Pay $200." << endl;
+            currPlayer->subtractMoney(200);
 			break;
 
 		case 29://Park Place
@@ -286,7 +290,7 @@ int main(){
 			break;
 
 		case 30://Chance 2
-
+            cout << "Chance." << endl;
 			break;
 
 		case 31://Boardwalk
