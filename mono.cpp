@@ -139,16 +139,14 @@ int main(){
 	int dice1 = 0; // dice values
 	int dice2 = 0;
 	Player* currPlayer; // current player's turn
-	Property* property; // pointer to property at landed location
+	Property* propertyClass; // pointer to property at landed location
 
 	while (true){
 
 		currPlayer = players[turn];
 
-		string input;
-		cout << currPlayer->getName() << "'s turn. Press ENTER";
-		cin >> input;
-		// would you like to buy/sell property/houses or roll dice?
+		cout << "\n" << currPlayer->getName() << "'s turn. What would you like to do?" << endl << endl;
+		while (menu(currPlayer));
 
 		// roll dice, determine doubles
 		dice1 = rollDye();
@@ -196,163 +194,169 @@ int main(){
 
 		// Go
 		case 0:
-			cout << "You're on GO" << endl;
+			cout << "You landed on GO!" << endl;
 			break;
 
 		// Mediterranean Ave
 		case 1:
-			property = properties[0];
-			landOnProperty(property, currPlayer, turn, players);
+			propertyClass = properties[0];
+			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// Baltic Ave
 		case 2:
-			property = properties[1];
-			landOnProperty(property, currPlayer, turn, players);
+			propertyClass = properties[1];
+			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// Income Tax
 		case 3:
-			cout << "Income Tax. Pay $200." << endl;
+			cout << "You landed on INCOME TAX. Pay $200." << endl;
 			currPlayer->subtractMoney(200);
 			break;
 
 		// Oriental Ave
 		case 4:
-			property = properties[2];
-			landOnProperty(property, currPlayer, turn, players);
+			propertyClass = properties[2];
+			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// Comm Chest
 		case 5:
-			cout << "Community Chest." << endl;
+			cout << "You landed on COMMUNITY CHEST!" << endl;
+			communityChest(currPlayer);
 			break;
 
 		// Vermont Ave
 		case 6:
-			property = properties[3];
-			landOnProperty(property, currPlayer, turn, players);
+			propertyClass = properties[3];
+			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// Connecticut Ave
 		case 7:
-			property = properties[4];
-			landOnProperty(property, currPlayer, turn, players);
+			propertyClass = properties[4];
+			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// Jail
 		case 8:
-			cout << "JAIL." << endl;
+			cout << "You landed on JAIL, just visiting..." << endl;
 			break;
 
 		// St. Charles Pl
 		case 9:
-			property = properties[5];
-			landOnProperty(property, currPlayer, turn, players);
+			propertyClass = properties[5];
+			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// States Ave
 		case 10:
-			property = properties[6];
-			landOnProperty(property, currPlayer, turn, players);
+			propertyClass = properties[6];
+			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// Virginia Ave
 		case 11:
-			property = properties[7];
-			landOnProperty(property, currPlayer, turn, players);
+			propertyClass = properties[7];
+			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// Chance
 		case 12:
-			cout << "Chance." << endl;
+			cout << "You landed on CHANCE!" << endl;
+			chance(currPlayer);
 			break;
 
 		// St. James Pl
 		case 13:
-			property = properties[8];
-			landOnProperty(property, currPlayer, turn, players);
+			propertyClass = properties[8];
+			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// Tennessee Ave
 		case 14:
-			property = properties[9];
-			landOnProperty(property, currPlayer, turn, players);
+			propertyClass = properties[9];
+			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// NY Ave
 		case 15:
-			property = properties[10];
-			landOnProperty(property, currPlayer, turn, players);
+			propertyClass = properties[10];
+			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// Free Parking
 		case 16:
-			cout << "FREE PaRkInG!!!1!" << endl;
+			cout << "FREE PARKING!!" << endl;
 			break;
 
 		// Kentucky Ave
 		case 17:
-			property = properties[11];
-			landOnProperty(property, currPlayer, turn, players);
+			propertyClass = properties[11];
+			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// Indiana Ave
 		case 18:
-			property = properties[12];
-			landOnProperty(property, currPlayer, turn, players);
+			propertyClass = properties[12];
+			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// Illinois Ave
 		case 19:
-			property = properties[13];
-			landOnProperty(property, currPlayer, turn, players);
+			propertyClass = properties[13];
+			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// Comm Chest
 		case 20:
-			cout << "Community Chest." << endl;
+			cout << "You landed on COMMUNITY CHEST!" << endl;
+			communityChest(currPlayer);
 			break;
 
 		// Atlantic Ave
 		case 21:
-			property = properties[14];
-			landOnProperty(property, currPlayer, turn, players);
+			propertyClass = properties[14];
+			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// Ventor Ave
 		case 22:
-			property = properties[15];
-			landOnProperty(property, currPlayer, turn, players);
+			propertyClass = properties[15];
+			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// Marvin Gardens
 		case 23:
-			property = properties[16];
-			landOnProperty(property, currPlayer, turn, players);
+			propertyClass = properties[16];
+			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// Go to Jail
 		case 24:
 			cout << "GO TO JAIL." << endl;
+			currPlayer->changeJail();
+			currPlayer->setLocation(8);
+			currPlayer->setDoubleTime(0);
 			break;
 
 		// Pacific Ave
 		case 25:
-			property = properties[17];
-			landOnProperty(property, currPlayer, turn, players);
+			propertyClass = properties[17];
+			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// NC Ave
 		case 26:
-			property = properties[18];
-			landOnProperty(property, currPlayer, turn, players);
+			propertyClass = properties[18];
+			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// Penn Ave
 		case 27:
-			property = properties[19];
-			landOnProperty(property, currPlayer, turn, players);
+			propertyClass = properties[19];
+			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// Luxury Tax
@@ -363,19 +367,20 @@ int main(){
 
 		// Park Place
 		case 29:
-			property = properties[20];
-			landOnProperty(property, currPlayer, turn, players);
+			propertyClass = properties[20];
+			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// Chance
 		case 30:
-			cout << "Chance." << endl;
+			cout << "You landed on CHANCE!" << endl;
+			chance(currPlayer);
 			break;
 
 		// Boardwalk
 		case 31:
-			property = properties[21];
-			landOnProperty(property, currPlayer, turn, players);
+			propertyClass = properties[21];
+			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// should never happen
@@ -385,9 +390,8 @@ int main(){
 			break;
 		}
 
-
 		// determines if the player's properties are part of monopoly
-		monopoly(currPlayer->getProperties());
+		monopoly(currPlayer);
 
 		// temporary code
 		// players.erase(players.begin() + players.size() - 1);
@@ -396,6 +400,11 @@ int main(){
 		if (players.size() == 1){
 			cout << "\nThe winner is " << players[0]->getName() << "!" << endl;
 			exit(EXIT_SUCCESS);
+		}
+
+		if (currPlayer->getJail()){
+			turn = (turn + 1) % nPlayers;
+			continue;
 		}
 
 		if (doubles){
@@ -428,8 +437,8 @@ int rollDye() {
 
 
 
+// Method: handles the condition of player being in jail
 // returns true if still in jail, false if out of jail
-// resets jail time and sets player's jail to false if released
 bool jail(Player* player, int dice1, int dice2){
 
 	// if player is not currently in jail, ends method and turn continues normally
@@ -486,7 +495,7 @@ bool jail(Player* player, int dice1, int dice2){
 	return false;
 }
 
-
+// Method: handles landing on property
 void landOnProperty(Property* property, Player* player, int turn, vector<Player*> players){
 
 	int rent = property->getRent();
@@ -522,123 +531,174 @@ void landOnProperty(Property* property, Player* player, int turn, vector<Player*
 		players[owner]->addMoney(rent);
 		player->subtractMoney(rent);
 	}
+	else cout << "You landed on your own property..." << endl;
 }
 
-void monopoly(vector<Property*> properties){
+// Method: scans player's current properties, determines which are part of monopoly
+void monopoly(Player* player){
 
 	// scans through current properties and determines if any of them are monopolies
 	// so go through vector, find number of times, say, the color red occurs
 	// and (for red specifically) if occur = 3, inMonopoly = true for all red ones
-    int purpleCounter;
-    int lblueCounter;
-    int pinkCounter;
-    int orangeCounter;
-    int redCounter;
-    int yellowCounter;
-    int greenCounter;
-    int dblueCounter;
+	// for loop: property->getColor()
+	// property->changeMonopoly()
 
-    for(unsigned int i = 0; i < properties.size(); i++){
-        if(properties[i]->getColor() == "PURPLE") {
-            purpleCounter++;
-        }
-        else if(properties[i]->getColor() == "L. BLUE") {
-            lblueCounter++;
-        }
-        else if(properties[i]->getColor() == "PINK") {
-            pinkCounter++;
-        }
-        else if(properties[i]->getColor() == "ORANGE") {
-            orangeCounter++;
-        }
-        else if(properties[i]->getColor() == "RED") {
-            redCounter++;
-        }
-        else if(properties[i]->getColor() == "YELLOW") {
-            yellowCounter++;
-        }
-        else if(properties[i]->getColor() == "GREEN") {
-            greenCounter++;
-        }
-        else if(properties[i]->getColor() == "D. BLUE") {
-            dblueCounter++;
-        }
+	vector<Property*> properties = player->getProperties();
 
-        if(purpleCounter == 2 || lblueCounter == 3 || pinkCounter == 3 || orangeCounter == 3 || redCounter == 3 ||
-            yellowCounter == 3 || greenCounter == 3 || dblueCounter == 2) {
-        properties[i]->changeMonopoly();
-        }
-    }
-	
+	int purple;
+	int lblue;
+	int pink;
+	int orange;
+	int red;
+	int yellow;
+	int green;
+	int dblue;
+
+	for(unsigned int i = 0; i < properties.size(); i++){
+
+		if (properties[i]->getColor() == "PURPLE") purple++;
+		else if (properties[i]->getColor() == "L. BLUE") lblue++;
+		else if (properties[i]->getColor() == "PINK") pink++;
+		else if (properties[i]->getColor() == "ORANGE") orange++;
+		else if (properties[i]->getColor() == "RED") red++;
+		else if (properties[i]->getColor() == "YELLOW") yellow++;
+		else if (properties[i]->getColor() == "GREEN") green++;
+		else if (properties[i]->getColor() == "D. BLUE") dblue++;
+	}
+
+	if (purple == 2 || lblue == 3 || pink == 3 || orange == 3 || red == 3 || yellow == 3 || green == 3 || dblue == 2) player->setMonopoly(true);
+	for (unsigned int i = 0; i < properties.size(); i++){
+		if ((purple == 2 && properties[i]->getColor() == "PURPLE") ||
+				(lblue == 3 && properties[i]->getColor() == "L. BLUE") ||
+				(pink == 3 && properties[i]->getColor() == "PINK") ||
+				(orange == 3 && properties[i]->getColor() == "ORANGE") ||
+				(red == 3 && properties[i]->getColor() == "RED") ||
+				(yellow == 3 && properties[i]->getColor() == "YELLOW") ||
+				(green == 3 && properties[i]->getColor() == "GREEN") ||
+				(dblue == 2 && properties[i]->getColor() == "D. BLUE")){
+
+			properties[i]->setMonopoly(true);
+		}
+	}
 }
 
-/*
-string communityChest[6] = {"Advance to Go (Collect $200)", "Bank error in your favor – Collect $200",
-			 "Doctor's fees {fee} – Pay $50", "Income tax refund – Collect $20",
-			 "Pay hospital fees of $100",  "You have won second prize in a beauty contest – Collect $10"};
-string chance[5] = {"Advance to Go (Collect $200)", "Pay poor tax of $15",
-			 "Your building {and} loan matures – Collect $150",  "You have won a crossword competition - Collect $100",
-		         "Bank pays you dividend of $50"};
-*/
+void communityChest(Player* player) {
 
-//void communityChest(Player* player) {
-//	int randNum = rand() % 6;
-//
-//	string communityChest[6] = {"Advance to Go (Collect $200)", "Bank error in your favor – Collect $200",
-//				 "Doctor's fees {fee} – Pay $50", "Income tax refund – Collect $20",
-//				 "Pay hospital fees of $100",  "You have won second prize in a beauty contest – Collect $10"};
-//	cout << communityChest[randNum] << endl;
-//	if(randNum == 0) {
-//		// increase player's money by 200
-//		player.addMoney(200);
-//	}
-//	else if(randNum == 1) {
-//		// increase player's money by 200
-//		player.addMoney(200);
-//	}
-//	else if(randNum == 2) {
-//		// decrease player's money by 50
-//		example.subtractMoney(50);
-//	}
-//
-//	else if(randNum == 3) {
-//		// increase player's money by 20
-//		example.addMoney(20);
-//	}
-//
-//	else if(randNum == 4) {
-//		// decrease player's money by 100
-//		example.subtractMoney(100);
-//	}
-//	else {
-//		// increase player's money by 10
-//		example.addMoney(10);
-//	}
-//}
-//
-//void chance(Player example) {
-//	int randNum = rand() % 5;
-//	cout << communityChest[randNum] << endl;
-//	if(randNum == 0) {
-//		// increase player's money by 200
-//		example.addMoney(200);
-//	}
-//	else if(randNum == 1) {
-//		// decrease player's money by 15
-//		example.subtractMoney(15);
-//	}
-//	else if(randNum == 2) {
-//		// increase player's money by 150
-//		example.addMoney(150);
-//	}
-//
-//	else if(randNum == 3) {
-//		// increase player's money by 100
-//		example.addMoney(100);
-//	}
-//
-//	else {
-//		// increase player's money by 50
-//		example.addMoney(50);
-//	}
-//}
+	int randNum = rand() % 6;
+	string communityChest[6] = {"Advance to Go (Collect $200)", "Bank error in your favor – Collect $200",
+			"Doctor's fees {fee} – Pay $50", "Income tax refund – Collect $20",
+			"Pay hospital fees of $100",  "You have won second prize in a beauty contest – Collect $10"};
+
+	cout << communityChest[randNum] << endl;
+
+	// set location to GO and add $200
+	if (randNum == 0) {
+		player->setLocation(0);
+		player->addMoney(200);
+	}
+
+	// collect $200
+	else if (randNum == 1) player->addMoney(200);
+
+	// decrease player's money by 50
+	else if (randNum == 2) player->subtractMoney(50);
+
+	// increase player's money by 20
+	else if (randNum == 3) player->addMoney(20);
+
+	// decrease player's money by 100
+	else if (randNum == 4) player->subtractMoney(100);
+
+	// increase player's money by 10
+	else player->addMoney(10);
+}
+
+void chance(Player* player) {
+
+	int randNum = rand() % 5;
+	string chance[5] = {"Advance to Go (Collect $200)", "Pay poor tax of $15",
+			"Your building {and} loan matures – Collect $150",  "You have won a crossword competition - Collect $100",
+			"Bank pays you dividend of $50"};
+
+	cout << chance[randNum] << endl;
+
+	// set location to GO and add $200
+	if (randNum == 0) {
+		player->setLocation(0);
+		player->addMoney(200);
+	}
+
+	// decrease player's money by 15
+	else if (randNum == 1) player->subtractMoney(200);
+
+	// increase player's money by 150
+	else if (randNum == 2) player->addMoney(150);
+
+	// increase player's money by 100
+	else if (randNum == 3) player->addMoney(100);
+
+	// increase player's money by 50
+	else player->addMoney(50);
+}
+
+// Method: Prints menu and looks for user input
+bool menu(Player* player){
+
+	vector<Property*> properties = player->getProperties();
+
+	cout << "1. Display player info" << endl; // money, properties, location, jail status
+	cout << "2. Roll dice" << endl;
+	cout << "3. Buy/sell houses" << endl;
+	// cout << "4. Mortgage property" << endl;
+
+	int choice;
+	while (true){
+		// user input: choice
+		cin >> choice;
+
+		// if not an integer, clear buffer and reprompt
+		if (!cin){
+			cin.clear();
+			while (cin.get() != '\n');
+			choice = 0;
+		}
+
+		// if not between 1-3, reprompt
+		if (choice > 3 || choice < 1){
+			cout << "Invalid input. Please try again: ";
+		}
+		else break;
+	}
+
+	if (choice == 1){
+		cout << "You have $" << player->getMoney() << ". You own ";
+		if (!properties.empty()){
+			for (unsigned int i=0; i < properties.size(); i++){
+				if (i != properties.size() - 1) cout << properties[i]->getName() << ", ";
+				else cout << properties[i]->getName() << ". ";
+			}
+		}
+		else cout << "no properties. ";
+		cout << "You are located at location " << player->getLocation() << ". ";
+		if (player->getJail()){
+			cout << "You are in turn #" << player->getJailTime() + 1 << " in jail.";
+		}
+		cout << endl;
+		return true;
+	}
+
+	else if (choice == 3){
+		if (player->getMonopoly()){
+			buildHouses();
+		}
+		else {
+			cout << "You do not have a monopoly. Unable to build houses." << endl;
+		}
+		return true;
+	}
+	return false;
+}
+
+void buildHouses(){
+
+}

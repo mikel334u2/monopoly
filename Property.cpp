@@ -68,6 +68,6 @@ bool Property::getMonopoly(){
 	return inMonopoly;
 }
 
-void Property::changeMonopoly(){
-	inMonopoly = !inMonopoly;
+void Property::setMonopoly(bool m){
+	inMonopoly = m;
 }
