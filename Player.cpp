@@ -1,15 +1,7 @@
-/*
- * Player.cpp
- *
- *  Created on: Mar 25, 2017
- *      Author: mikel
- */
-
 #include "mono.h"
 #include <string>
 #include <iostream>
 #include <vector>
-
 using namespace std;
 
 //class Player{
@@ -33,7 +25,7 @@ using namespace std;
 //    void removeProperty();
 //    void addProperty();
 //
-//}
+//};
 
 Player::Player(string n, string p){
 	name = n;
@@ -42,6 +34,8 @@ Player::Player(string n, string p){
 	location = 0;
 	inJail = false;
 	jailTime = 0;
+	doubleTime = 0;
+	hasMonopoly = false;
 	vector<Property*> properties;
 }
 
@@ -59,17 +53,16 @@ int Player::getMoney(){
 	return money;
 }
 
-void Player::setMoney(int mon){
-	money = mon;
-
+void Player::setMoney(int m){
+	money = m;
 }
 
-void Player::subtractMoney(int loss){
-	money -= loss;
+void Player::addMoney(int m){
+	money += m;
 }
 
-void Player::addMoney(int gain){
-	money += gain;
+void Player::subtractMoney(int m){
+	money -= m;
 }
 
 int Player::getLocation(){
@@ -80,8 +73,8 @@ bool Player::getJail(){
 	return inJail;
 }
 
-void Player::setJail(bool jail){
-	inJail = jail;
+void Player::changeJail(){
+	inJail = !inJail;
 }
 
 int Player::getJailTime(){
@@ -90,6 +83,14 @@ int Player::getJailTime(){
 
 void Player::setJailTime(int time){
 	jailTime = time;
+}
+
+int Player::getDoubleTime(){
+	return doubleTime;
+}
+
+void Player::setDoubleTime(int time){
+	doubleTime = time;
 }
 
 void Player::setLocation(int loc){
@@ -105,7 +106,10 @@ bool Player::addLocation(int addSpaces){
 	return false;
 }
 
-void Player::addProperty(Property* property)
-{
+void Player::addProperty(Property* property){
 	properties.push_back(property);
+}
+
+vector<Property*> Player::getProperties(){
+	return properties;
 }
