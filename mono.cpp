@@ -123,4 +123,61 @@ int rollDye() {
 	return rand() % 6 + 1;
 }
 
+string communityChest[6] = {"Advance to Go (Collect $200)", "Bank error in your favor – Collect $200", 
+			 "Doctor's fees {fee} – Pay $50", "Income tax refund – Collect $20",
+			 "Pay hospital fees of $100",  "You have won second prize in a beauty contest – Collect $10"};
+
+string chance[5] = {"Advance to Go (Collect $200)", "Pay poor tax of $15", 
+			 "Your building {and} loan matures – Collect $150",  "You have won a crossword competition - Collect $100",
+		         "Bank pays you dividend of $50"};
+
+void communityChest() {
+	int randNum = rand() % 6;
+	cout << communityChest[randNum] << endl;
+	if(randNum == 0) {
+		// increase player's money by 200
+	}
+	else if(randNum == 1) {
+		// increase player's money by 200
+	}
+	else if(randNum == 2) {
+		// decrease player's money by 50
+	}
+	
+	else if(randNum == 3) {
+		// increase player's money by 20
+	}
+	
+	else if(randNum == 4) {
+		// decrease player's money by 100
+	}
+	else {
+		// increase player's money by 10
+	}
+}
+
+void chance() {
+	int randNum = rand() % 5;
+	cout << communityChest[randNum] << endl;
+	if(randNum == 0) {
+		// increase player's money by 200
+	}
+	else if(randNum == 1) {
+		// decrease player's money by 15
+	}
+	else if(randNum == 2) {
+		// increase player's money by 150
+	}
+	
+	else if(randNum == 3) {
+		// increase player's money by 100
+	}
+	
+	else {
+		// increase player's money by 50
+	}
+}
+	
+	
+
 
