@@ -19,8 +19,11 @@ using namespace std;
 using namespace sf;
 
 int main(int argc, const char * argv[]){
-	
-	// GUI SETUP
+
+    //Filepath variable
+    std::string filepath = "Danie//Documents//GitHub//monopoly//Gui//Gui//";
+
+    // GUI SETUP
 	
 	
 	
@@ -36,7 +39,7 @@ int main(int argc, const char * argv[]){
     	Font font;
     	
     	//loads the font
-    	if (!font.loadFromFile("/Users/harsh/Desktop/Gui/Gui/8-BIT WONDER.TTF")){
+    	if (!font.loadFromFile(filepath + "8-BIT WONDER.TTF")){
 		cout<<"error"<<endl;
 	}
 	
@@ -44,7 +47,7 @@ int main(int argc, const char * argv[]){
 	Font font2;
 
 	//loads the font
-	if(!font2.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Arial.ttf")){
+	if(!font2.loadFromFile(filepath + "Arial.ttf")){
 		cout<<"error"<<endl;
 	}
 	
@@ -204,80 +207,78 @@ int main(int argc, const char * argv[]){
 	Texture prop22;
 
 
-
-
 	//loading all the pieces
-	robot.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Robot.png");
-	Car.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Car.png");
-	Dog.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Dog.png");
-	Iron.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Iron.png");
-	Phone.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Phone.png");
-	PotOfGold.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Pot of Gold.png");
-	Ship.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Ship.png");
-	Thimble.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Thimble.png");
+	robot.loadFromFile(filepath + "Robot.png");
+	Car.loadFromFile(filepath + "Car.png");
+	Dog.loadFromFile(filepath + "Dog.png");
+	Iron.loadFromFile(filepath + "Iron.png");
+	Phone.loadFromFile(filepath + "Phone.png");
+	PotOfGold.loadFromFile(filepath + "Pot of Gold.png");
+	Ship.loadFromFile(filepath + "Ship.png");
+	Thimble.loadFromFile(filepath + "Thimble.png");
 
 
 	//loading all textures
-	board.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Monopoly Board.png");
-	vLine.loadFromFile("/Users/harsh/Desktop/Gui/Gui/vertical line.png");
-	hLine.loadFromFile("/Users/harsh/Desktop/Gui/Gui/horizontal line.png");
-	tile0.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Go.png");
-	tile1.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Mediterranian Avenue.png");
-	tile2.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Baltic Avenue.png");
-	tile3.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Income Tax.png");
-	tile4.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Oriental Avenue.png");
-	tile5.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Community Chest1.png");
-	tile6.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Vermont Avenue.png");
-	tile7.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Connecticut Avenue.png");
-	tile8.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Jail.png");
-	tile9.loadFromFile("/Users/harsh/Desktop/Gui/Gui/St Charles Place.png");
-	tile10.loadFromFile("/Users/harsh/Desktop/Gui/Gui/States Avenue.png");
-	tile11.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Virginia Avenue.png");
-	tile12.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Chance1.png");
-	tile13.loadFromFile("/Users/harsh/Desktop/Gui/Gui/St James Place.png");
-	tile14.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Tennessee Avenue.png");
-	tile15.loadFromFile("/Users/harsh/Desktop/Gui/Gui/New York Avenue.png");
-	tile16.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Free Parking.png");
-	tile17.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Kentucky Avenue.png");
-	tile18.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Indiana Avenue.png");
-	tile19.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Illinois Avenue.png");
-	tile20.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Community Chest2.png");
-	tile21.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Atlantic Avenue.png");
-	tile22.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Ventor Avenue.png");
-	tile23.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Marvin Gardens.png");
-	tile24.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Go To Jail.png");
-	tile25.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Pacific Avenue.png");
-	tile26.loadFromFile("/Users/harsh/Desktop/Gui/Gui/North Carolina Avenue.png");
-	tile27.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Pennsylvania Avenue.png");
-	tile28.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Luxury Tax.png");
-	tile29.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Park Place.png");
-	tile30.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Chance2.png");
-	tile31.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Boardwalk.png");
+	board.loadFromFile(filepath + "Monopoly Board.png");
+	vLine.loadFromFile(filepath + "vertical line.png");
+	hLine.loadFromFile(filepath + "horizontal line.png");
+	tile0.loadFromFile(filepath + "Go.png");
+	tile1.loadFromFile(filepath + "Mediterranian Avenue.png");
+	tile2.loadFromFile(filepath + "Baltic Avenue.png");
+	tile3.loadFromFile(filepath + "Income Tax.png");
+	tile4.loadFromFile(filepath + "Oriental Avenue.png");
+	tile5.loadFromFile(filepath + "Community Chest1.png");
+	tile6.loadFromFile(filepath + "Vermont Avenue.png");
+	tile7.loadFromFile(filepath + "Connecticut Avenue.png");
+	tile8.loadFromFile(filepath + "Jail.png");
+	tile9.loadFromFile(filepath + "St Charles Place.png");
+	tile10.loadFromFile(filepath + "States Avenue.png");
+	tile11.loadFromFile(filepath + "Virginia Avenue.png");
+	tile12.loadFromFile(filepath + "Chance1.png");
+	tile13.loadFromFile(filepath + "St James Place.png");
+	tile14.loadFromFile(filepath + "Tennessee Avenue.png");
+	tile15.loadFromFile(filepath + "New York Avenue.png");
+	tile16.loadFromFile(filepath + "Free Parking.png");
+	tile17.loadFromFile(filepath + "Kentucky Avenue.png");
+	tile18.loadFromFile(filepath + "Indiana Avenue.png");
+	tile19.loadFromFile(filepath + "Illinois Avenue.png");
+	tile20.loadFromFile(filepath + "Community Chest2.png");
+	tile21.loadFromFile(filepath + "Atlantic Avenue.png");
+	tile22.loadFromFile(filepath + "Ventor Avenue.png");
+	tile23.loadFromFile(filepath + "Marvin Gardens.png");
+	tile24.loadFromFile(filepath + "Go To Jail.png");
+	tile25.loadFromFile(filepath + "Pacific Avenue.png");
+	tile26.loadFromFile(filepath + "North Carolina Avenue.png");
+	tile27.loadFromFile(filepath + "Pennsylvania Avenue.png");
+	tile28.loadFromFile(filepath + "Luxury Tax.png");
+	tile29.loadFromFile(filepath + "Park Place.png");
+	tile30.loadFromFile(filepath + "Chance2.png");
+	tile31.loadFromFile(filepath + "Boardwalk.png");
 
 
 	//loading all the properties
-	prop1.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Mediterranian Avenue Label.png");
-	prop2.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Atlantic Avenue Label.png");
-	prop3.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Boardwalk Label.png");
-	prop4.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Connecticut Avenue Label.png");
-	prop5.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Illinois Avenue Label.png");
-	prop6.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Indiana Avenue Label.png");
-	prop7.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Baltic Avenue Label.png");
-	prop8.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Kentucky Avenue Label.png");
-	prop9.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Marvin Gardens Label.png");
-	prop10.loadFromFile("/Users/harsh/Desktop/Gui/Gui/New York Avenue Label.png");
-	prop11.loadFromFile("/Users/harsh/Desktop/Gui/Gui/North Carolina Ave Label.png");
-	prop12.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Oriental Avenue Label.png");
-	prop13.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Park Place Label.png");
-	prop14.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Pennsylvania Avenue Label.png");
-	prop15.loadFromFile("/Users/harsh/Desktop/Gui/Gui/St Charles Place Label.png");
-	prop16.loadFromFile("/Users/harsh/Desktop/Gui/Gui/St James Place Label.png");
-	prop17.loadFromFile("/Users/harsh/Desktop/Gui/Gui/States Avenue Label.png");
-	prop18.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Tennessee Avenue Label.png");
-	prop19.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Ventor Avenue Label.png");
-	prop20.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Vermont Label.png");
-	prop21.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Virginia Avenue Label.png");
-	prop22.loadFromFile("/Users/harsh/Desktop/Gui/Gui/Pacific Avenue Label.png");
+	prop1.loadFromFile(filepath + "Mediterranian Avenue Label.png");
+	prop2.loadFromFile(filepath + "Atlantic Avenue Label.png");
+	prop3.loadFromFile(filepath + "Boardwalk Label.png");
+	prop4.loadFromFile(filepath + "Connecticut Avenue Label.png");
+	prop5.loadFromFile(filepath + "Illinois Avenue Label.png");
+	prop6.loadFromFile(filepath + "Indiana Avenue Label.png");
+	prop7.loadFromFile(filepath + "Baltic Avenue Label.png");
+	prop8.loadFromFile(filepath + "Kentucky Avenue Label.png");
+	prop9.loadFromFile(filepath + "Marvin Gardens Label.png");
+	prop10.loadFromFile(filepath + "New York Avenue Label.png");
+	prop11.loadFromFile(filepath + "North Carolina Ave Label.png");
+	prop12.loadFromFile(filepath + "Oriental Avenue Label.png");
+	prop13.loadFromFile(filepath + "Park Place Label.png");
+	prop14.loadFromFile(filepath + "Pennsylvania Avenue Label.png");
+	prop15.loadFromFile(filepath + "St Charles Place Label.png");
+	prop16.loadFromFile(filepath + "St James Place Label.png");
+	prop17.loadFromFile(filepath + "States Avenue Label.png");
+	prop18.loadFromFile(filepath + "Tennessee Avenue Label.png");
+	prop19.loadFromFile(filepath + "Ventor Avenue Label.png");
+	prop20.loadFromFile(filepath + "Vermont Label.png");
+	prop21.loadFromFile(filepath + "Virginia Avenue Label.png");
+	prop22.loadFromFile(filepath + "Pacific Avenue Label.png");
 
 
 
