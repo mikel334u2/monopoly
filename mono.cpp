@@ -148,99 +148,159 @@ int main(){
 		case 0:
 			break;
 
-		case 1:
+		case 1://Mediterranean Avenue
 			property = properties[0];
 			landOnProperty(property, currPlayer, turn, players);
 			break;
 
-		case 2:
+		case 2://Baltic Avenue
+			property = properties[1];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
-		case 3:
+		case 3://Income Tax
+			property = properties[2];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
-		case 4:
+		case 4://Oriental Avenue
+			property = properties[3];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
-		case 5:
+		case 5://Community Chest
+			property = properties[4];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
-		case 6:
+		case 6://Vermont Avenue
+			property = properties[5];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
-		case 7:
+		case 7://Connecticut Avenue
+			property = properties[6];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
-		case 8:
+		case 8://JAIL
+			property = properties[7];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
-		case 9:
+		case 9://St. Charles Place
+			property = properties[8];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
-		case 10:
+		case 10://States Avenue
+			property = properties[9];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
-		case 11:
+		case 11://Virginia Avenue
+			property = properties[10];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
-		case 12:
+		case 12://Chance
+			property = properties[11];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
-		case 13:
+		case 13://St. James Place
+			property = properties[12];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
-		case 14:
+		case 14://Tennessee Avenue
+			property = properties[13];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
-		case 15:
+		case 15://New York Avenue
+			property = properties[14];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
-		case 16:
+		case 16://Free Parking
+			property = properties[15];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
-		case 17:
+		case 17://Kentucky Avenue
+			property = properties[16];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
-		case 18:
+		case 18://Indiana Avenue
+			property = properties[17];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
-		case 19:
+		case 19://Illinois Avenue
+			property = properties[18];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
-		case 20:
+		case 20://Community Chest 2
+			property = properties[19];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
-		case 21:
+		case 21://Atlantic Avenue
+			property = properties[20];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
-		case 22:
+		case 22://Ventor Avenue
+			property = properties[21];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
-		case 23:
+		case 23://Marvin Gardens
+			property = properties[22];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
-		case 24:
+		case 24://GO TO JAIL
+			property = properties[23];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
-		case 25:
+		case 25://Pacific Avenue
+			property = properties[24];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
-		case 26:
+		case 26://North Carolina Avenue
+			property = properties[25];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
-		case 27:
+		case 27://Pennsylvania Avenue
+			property = properties[26];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
-		case 28:
+		case 28://Luxury Tax
+			property = properties[27];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
-		case 29:
+		case 29://Park Place
+			property = properties[28];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
-		case 30:
+		case 30://Chance 2
+			property = properties[29];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
-		case 31:
+		case 31://Boardwalk
+			property = properties[30];
+			landOnProperty(property, currPlayer, turn, players);
 			break;
 
 		default:
