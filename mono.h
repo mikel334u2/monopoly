@@ -34,7 +34,7 @@ public:
 	int getOwner();
 	void setOwner(int);
 	bool getMonopoly();
-	void changeMonopoly();
+	void setMonopoly(bool);
 
 };
 
@@ -74,11 +74,17 @@ public:
 	void setDoubleTime(int);
 	bool addLocation(int);
 	void setLocation(int);
+	void setMonopoly(bool);
+	bool getMonopoly();
 };
 
 int rollDye();
 bool jail(Player*, int, int);
 void landOnProperty(Property*, Player*, int, vector<Player*>);
-void monopoly(vector<Property*>);
+void monopoly(Player*);
+void communityChest(Player*);
+void chance(Player*);
+bool menu(Player*);
+void buildHouses();
 
 #endif /* MONO_H_ */

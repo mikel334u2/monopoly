@@ -97,6 +97,14 @@ void Player::setLocation(int loc){
 	location = loc;
 }
 
+void Player::setMonopoly(bool mono){
+	hasMonopoly = mono;
+}
+
+bool Player::getMonopoly(){
+	return hasMonopoly;
+}
+
 bool Player::addLocation(int addSpaces){
 	int prevLoc = location;
 	location = (location + addSpaces) % 32;
