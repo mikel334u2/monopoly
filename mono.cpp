@@ -13,6 +13,14 @@
 #include "mono.h"
 using namespace std;
 
+string communityChest[6] = { "Advance to Go (Collect $200)", "Bank error in your favor – Collect $200",
+"Doctor's fees {fee} – Pay $50", "Income tax refund – Collect $20",
+"Pay hospital fees of $100",  "You have won second prize in a beauty contest – Collect $10" };
+
+string chance[5] = { "Advance to Go (Collect $200)", "Pay poor tax of $15",
+"Your building {and} loan matures – Collect $150",  "You have won a crossword competition - Collect $100",
+"Bank pays you dividend of $50" };
+
 int main(){
 
 	int nPlayers = 0;
@@ -123,6 +131,7 @@ int rollDye() {
 	return rand() % 6 + 1;
 }
 
+/*
 string communityChest[6] = {"Advance to Go (Collect $200)", "Bank error in your favor – Collect $200", 
 			 "Doctor's fees {fee} – Pay $50", "Income tax refund – Collect $20",
 			 "Pay hospital fees of $100",  "You have won second prize in a beauty contest – Collect $10"};
@@ -130,51 +139,63 @@ string communityChest[6] = {"Advance to Go (Collect $200)", "Bank error in your 
 string chance[5] = {"Advance to Go (Collect $200)", "Pay poor tax of $15", 
 			 "Your building {and} loan matures – Collect $150",  "You have won a crossword competition - Collect $100",
 		         "Bank pays you dividend of $50"};
+*/
 
-void communityChest() {
+void communityChest(Player example) {
 	int randNum = rand() % 6;
 	cout << communityChest[randNum] << endl;
 	if(randNum == 0) {
 		// increase player's money by 200
+		example.addMoney(200);
 	}
 	else if(randNum == 1) {
 		// increase player's money by 200
+		example.addMoney(200);
 	}
 	else if(randNum == 2) {
 		// decrease player's money by 50
+		example.subtractMoney(50);
 	}
 	
 	else if(randNum == 3) {
 		// increase player's money by 20
+		example.addMoney(20);
 	}
 	
 	else if(randNum == 4) {
 		// decrease player's money by 100
+		example.subtractMoney(100);
 	}
 	else {
 		// increase player's money by 10
+		example.addMoney(10);
 	}
 }
 
-void chance() {
+void chance(Player example) {
 	int randNum = rand() % 5;
 	cout << communityChest[randNum] << endl;
 	if(randNum == 0) {
 		// increase player's money by 200
+		example.addMoney(200);
 	}
 	else if(randNum == 1) {
 		// decrease player's money by 15
+		example.subtractMoney(15);
 	}
 	else if(randNum == 2) {
 		// increase player's money by 150
+		example.addMoney(150);
 	}
 	
 	else if(randNum == 3) {
 		// increase player's money by 100
+		example.addMoney(100);
 	}
 	
 	else {
 		// increase player's money by 50
+		example.addMoney(50);
 	}
 }
 	
