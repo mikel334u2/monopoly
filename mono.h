@@ -65,7 +65,8 @@ public:
 	void setCurrLoc(int);
 };
 
-
+void communityChest();
+void chance();
 
 
 #endif /* MONO_H_ */
