@@ -14,34 +14,53 @@ int main(){
 	int nPlayers = 0;
 
 	cout << "Welcome to Monopoly!" << endl;
-	cout << "PLEASE INPUT THE NUMBER OF PLAYERS (2-4): ";
+	cout << "Please input the number of players (2-4): ";
 
 	while (true){
+
+		// user input: number of players
 		cin >> nPlayers;
+
+		// if not an integer, clear buffer and reprompt
 		if (!cin){
 			cin.clear();
 			while (cin.get() != '\n');
 			nPlayers = 0;
 		}
+
+		// if not between 2-4, reprompt
 		if (nPlayers > 4 || nPlayers < 2){
-			cout << "INVALID INPUT. PLEASE TRY AGAIN:  ";
+			cout << "Invalid input. Please try again: ";
 		}
 		else break;
 	}
 
 	vector<string> names;
-	const string pcs[] = {"TERRIER","IRON","SHIP","CAR","POT","ROBOT","THIMBLE","PHONE"};
-	vector<string> pieces(pcs, pcs + sizeof(pcs) / sizeof(pcs[0]));
-
-	cout << "PLEASE ENTER THE NAMES OF THE PLAYERS: " << endl;
+	cout << "Please enter the names of the players: (max 10 characters)" << endl;
 	for (int i = 0; i < nPlayers; i++){
-		cout << i+1 << ". ";
+
+		// user input: names
 		string input;
-		cin >> input;
+		do{
+			cout << i+1 << ". ";
+			cin >> input;
+
+			// if name is more than 10 characters, reprompt
+			if (input.size() < 1 || input.size() > 10){
+				cout << "Invalid name. Please enter again." << endl;
+			}
+		} while (input.size() < 1 || input.size() > 10);
+
+		// add name to names vector
 		names.push_back(input);
 	}
 
-	cout << "\nPOSSIBLE PIECES: ";
+	// adding possible pieces to pieces vector
+	const string pcs[] = {"TERRIER","IRON","SHIP","CAR","POT","ROBOT","THIMBLE","PHONE"};
+	vector<string> pieces(pcs, pcs + sizeof(pcs) / sizeof(pcs[0]));
+
+	// list possible pieces
+	cout << "\nPossible pieces: ";
 	for (unsigned int i = 0; i < pieces.size(); i++){
 		if (i < 7) cout << pieces[i] << ", ";
 		else cout << pieces[i] << endl;
@@ -50,32 +69,41 @@ int main(){
 	vector<string> playPieces;
 	for(int i = 0; i < nPlayers; i++){
 		string input = "";
+
+		// while input is not in pieces vector
 		while(find(pieces.begin(), pieces.end(), input) == pieces.end()){
-			cout << names[i] << ", PLEASE CHOOSE YOUR PIECE: ";
+			cout << names[i] << ", please choose your piece: ";
+
+			// ask for the piece the player wants
 			cin >> input;
 			transform(input.begin(), input.end(), input.begin(), ::toupper);
+
+			// if the piece input cannot be found (doesn't exist), reprompt
 			if(find(pieces.begin(), pieces.end(), input) == pieces.end()){
-				cout << "INVALID PIECE, PLEASE TRY AGAIN." << endl;
+				cout << "Invalid piece, please try again." << endl;
 			}
 		}
+
+		// add piece to playPieces
 		playPieces.push_back(input);
+
+		// remove the piece from pieces vector so that next player can't use the same piece
 		pieces.erase(remove(pieces.begin(), pieces.end(), input), pieces.end());
 	}
 
-	cout << endl;
-
+	// shows who's who
 	for (int i = 0; i < nPlayers; i++){
 		cout << names[i] << " is " << playPieces[i] << "." << endl;
 	}
 
-	cout << endl;
-
+	// creates main vector of player pointers
 	vector<Player*> players;
 	for (int i = 0; i < nPlayers; i++){
 		Player* player = new Player(names[i],playPieces[i]);
 		players.push_back(player);
 	}
 
+	// information for each property
 	string propertyNames[22] = {"MEDITERRANEAN AVENUE","BALTIC AVENUE","ORIENTAL AVENUE","VERMONT AVENUE",
 			"CONNECTICUT AVENUE","ST. CHARLES PLACE","STATES AVENUE","VIRGINIA AVENUE","ST. JAMES PLACE",
 			"TENNESSEE AVENUE","NEW YORK AVENUE","KENTUCKY AVENUE","INDIANA AVENUE","ILLINOIS AVENUE",
@@ -93,6 +121,7 @@ int main(){
 	int fiveHouseRent[22] = {250,450,550,550,600,750,750,900,950,950,1000,1050,1050,1100,1150,1150,1200,
 			1275,1275,1400,1500,2000};
 
+	// creates main vector of property pointers
 	vector<Property*> properties;
 	for (int i = 0; i < 22; i++){
 		Property* property = new Property(propertyNames[i],propertyColor[i],i,propertyPrice[i],propertyHousePrice[i],initialRent[22],
@@ -103,256 +132,243 @@ int main(){
 	// for loop iterates through players vector
 	// for (unsigned int i = 0; i < players.size(); i++){}
 
-    string answer;
-	int turn = 0;
-	int location;
-	bool doubles = false;
-    bool start = true;
-	bool passGo;
-	int dice1 = 0;
+	int turn = 0; // turn of current player
+	int location; // location of player
+	bool doubles = false; // bool if doubles are rolled, then true
+	bool passGo; // if passes go, then true
+	int dice1 = 0; // dice values
 	int dice2 = 0;
-	int total = 0;
-	Player* currPlayer;
-	Property* property;
+	Player* currPlayer; // current player's turn
+	Property* property; // pointer to property at landed location
 
 	while (true){
-		doubles = false;
+
 		currPlayer = players[turn];
 
 		// would you like to buy/sell property/houses or roll dice?
-        cout << currPlayer->getName() << " ARE YOU READY TO START YOUR TURN (Y) ? ";
 
-        do{
-            cin >> answer;
-            if(answer == "Y" || "y"){
-                dice1 = rollDye();
-                dice2 = rollDye();
-                total = dice1 + dice2;
-                currPlayer->setLocation(total);
-                start = false;
-            } else{
-                cout << endl << endl << "NOT VALID TRY AGAIN: ";
-            }
-        } while(start);
+		// roll dice, determine doubles
+		dice1 = rollDye();
+		dice2 = rollDye();
+		doubles = (dice1 == dice2) ? true : false;
 
-
-
-		cout << "DICE 1: " << dice1 << ",DICE 2: " << dice2 << endl;
-
-		if(dice1 == dice2){
-			doubles = true;
+		// if still in jail, go to next player's turn
+		if (jail(currPlayer, dice1, dice2)){
+			turn = (turn + 1) % nPlayers;
+			continue;
 		}
 
+		// if just out of jail, make doubles false no matter what
+		if (currPlayer->getJail()){
+			doubles = false;
+			currPlayer->changeJail();
+		}
 
-//		if (jail(currPlayer, dice1, dice2)){
-//			turn = (turn + 1) % nPlayers;
-//			continue;
-//		}
-//		if (currPlayer->getJail()){
-//			doubles = false;
-//			currPlayer->changeJail();
-//		}
-//
-//		if (doubles) currPlayer->setDoubleTime(currPlayer->getDoubleTime()+1);
-//		if (currPlayer->getDoubleTime() >= 3){
-//			currPlayer->changeJail();
-//			currPlayer->setLocation(7);
-//			currPlayer->setDoubleTime(0);
-//			turn = (turn + 1) % nPlayers;
-//			continue;
-//		}
+		// if doubles rolled, count number of doubles
+		if (doubles) currPlayer->setDoubleTime(currPlayer->getDoubleTime()+1);
 
+		// if number of doubles is 3, send player to jail
+		if (currPlayer->getDoubleTime() >= 3){
+			currPlayer->changeJail();
+			currPlayer->setLocation(8);
+			currPlayer->setDoubleTime(0);
+			turn = (turn + 1) % nPlayers;
+			continue;
+		}
+
+		// move player by dice1 plus dice2
 		passGo = currPlayer->addLocation(dice1 + dice2);
+
+		// current location
 		location = currPlayer->getLocation();
+
+		// if passGo, collect $200
 		if (passGo){
 			currPlayer->addMoney(200);
-			cout<< currPlayer->getName() << " PASSED GO. COLLECT $200." << endl;
+			cout<< currPlayer->getName() << " passed GO. Collect $200." << endl;
 		}
 
-		switch (currPlayer->getLocation()){
+		// main switch for determining what to do at each space
+		switch (location){
 
+		// Go
 		case 0:
-            cout << "LANDED ON GO. COLLECT $200." << endl;
-            currPlayer->addMoney(200);
 			break;
 
-		case 1://Mediterranean Avenue
+		// Mediterranean Ave
+		case 1:
 			property = properties[0];
 			landOnProperty(property, currPlayer, turn, players);
 			break;
 
-		case 2://Baltic Avenue
-			property = properties[1];
-			landOnProperty(property, currPlayer, turn, players);
+		// Baltic Ave
+		case 2:
 			break;
 
-		case 3://Income Tax
-            cout << "Income Tax. Pay $200." << endl;
-            currPlayer->subtractMoney(200);
+		// Income Tax
+		case 3:
 			break;
 
-		case 4://Oriental Avenue
-			property = properties[2];
-			landOnProperty(property, currPlayer, turn, players);
+		// Oriental Ave
+		case 4:
 			break;
 
-		case 5://Community Chest
-            cout << "Community Chest." << endl;
+		// Comm Chest
+		case 5:
 			break;
 
-		case 6://Vermont Avenue
-			property = properties[3];
-			landOnProperty(property, currPlayer, turn, players);
+		// Vermont Ave
+		case 6:
 			break;
 
-		case 7://Connecticut Avenue
-			property = properties[4];
-			landOnProperty(property, currPlayer, turn, players);
+		// Connecticut Ave
+		case 7:
 			break;
 
-		case 8://JAIL
-            cout << "JAIL." << endl;
+		// Jail
+		case 8:
 			break;
 
-		case 9://St. Charles Place
-			property = properties[5];
-			landOnProperty(property, currPlayer, turn, players);
+		// St. Charles Pl
+		case 9:
 			break;
 
-		case 10://States Avenue
-			property = properties[6];
-			landOnProperty(property, currPlayer, turn, players);
+		// States Ave
+		case 10:
 			break;
 
-		case 11://Virginia Avenue
-			property = properties[7];
-			landOnProperty(property, currPlayer, turn, players);
+		// Virginia Ave
+		case 11:
 			break;
 
-		case 12://Chance
-            cout << "Chance." << endl;
+		// Chance
+		case 12:
 			break;
 
-		case 13://St. James Place
-			property = properties[8];
-			landOnProperty(property, currPlayer, turn, players);
+		// St. James Pl
+		case 13:
 			break;
 
-		case 14://Tennessee Avenue
-			property = properties[9];
-			landOnProperty(property, currPlayer, turn, players);
+		// Tennessee Ave
+		case 14:
 			break;
 
-		case 15://New York Avenue
-			property = properties[10];
-			landOnProperty(property, currPlayer, turn, players);
+		// NY Ave
+		case 15:
 			break;
 
-		case 16://Free Parking
-            cout << "FREE PaRkInG!!!1!" << endl;
+		// Free Parking
+		case 16:
 			break;
 
-		case 17://Kentucky Avenue
-			property = properties[11];
-			landOnProperty(property, currPlayer, turn, players);
+		// Kentucky Ave
+		case 17:
 			break;
 
-		case 18://Indiana Avenue
-			property = properties[12];
-			landOnProperty(property, currPlayer, turn, players);
+		// Indiana Ave
+		case 18:
 			break;
 
-		case 19://Illinois Avenue
-			property = properties[13];
-			landOnProperty(property, currPlayer, turn, players);
+		// Illinois Ave
+		case 19:
 			break;
 
-		case 20://Community Chest 2
-            cout << "Community Chest." << endl;
+		// Comm Chest
+		case 20:
 			break;
 
-		case 21://Atlantic Avenue
-			property = properties[14];
-			landOnProperty(property, currPlayer, turn, players);
+		// Atlantic Ave
+		case 21:
 			break;
 
-		case 22://Ventor Avenue
-			property = properties[15];
-			landOnProperty(property, currPlayer, turn, players);
+		// Ventor Ave
+		case 22:
 			break;
 
-		case 23://Marvin Gardens
-			property = properties[16];
-			landOnProperty(property, currPlayer, turn, players);
+		// Marvin Gardens
+		case 23:
 			break;
 
-		case 24://GO TO JAIL
-            cout << "GO TO JAIL." << endl;
+		// Go to Jail
+		case 24:
 			break;
 
-		case 25://Pacific Avenue
-			property = properties[17];
-			landOnProperty(property, currPlayer, turn, players);
+		// Pacific Ave
+		case 25:
 			break;
 
-		case 26://North Carolina Avenue
-			property = properties[18];
-			landOnProperty(property, currPlayer, turn, players);
+		// NC Ave
+		case 26:
 			break;
 
-		case 27://Pennsylvania Avenue
-			property = properties[19];
-			landOnProperty(property, currPlayer, turn, players);
+		// Penn Ave
+		case 27:
 			break;
 
-		case 28://Luxury Tax
-            cout << "Luxury Tax. Pay $200." << endl;
-            currPlayer->subtractMoney(200);
+		// Luxury Tax
+		case 28:
 			break;
 
-		case 29://Park Place
-			property = properties[20];
-			landOnProperty(property, currPlayer, turn, players);
+		// Park Place
+		case 29:
 			break;
 
-		case 30://Chance 2
-            cout << "Chance." << endl;
+		// Chance
+		case 30:
 			break;
 
-		case 31://Boardwalk
-			property = properties[21];
-			landOnProperty(property, currPlayer, turn, players);
+		// Boardwalk
+		case 31:
 			break;
 
+		// should never happen
 		default:
 			cout << "Error: Unreachable?" << endl;
 			exit(EXIT_SUCCESS);
 			break;
 		}
 
+		// determines if the player's properties are part of monopoly
 		monopoly(currPlayer->getProperties());
 
 		// temporary code
 		// players.erase(players.begin() + players.size() - 1);
 
+		// if 1 player left, end game
 		if (players.size() == 1){
-			cout << "\nTHE WINNER IS " << players[0]->getName() << "!" << endl;
+			cout << "\nThe winner is " << players[0]->getName() << "!" << endl;
 			exit(EXIT_SUCCESS);
 		}
 
-		if(doubles){
-			cout << "YOU ROLLED DOUBLES. ROLL AGAIN." << endl << endl;
-		} else{
-			cout << "End of " << currPlayer->getName() << "'s turn." << endl << endl;
-            turn = (turn + 1) % nPlayers;
-        }
-    }
+		if (doubles){
+			cout << "YOU ROLLED DOUBLES. ROLL AGAIN." << endl;
+			continue;
+		}
+
+		// reset number of doubles of current player
+		currPlayer->setDoubleTime(0);
+
+		// next turn
+		turn = (turn + 1) % nPlayers;
+	}
 }
 
 // C++98 CODE ---------------------------
 int rollDye() {
 	return rand() % 6 + 1;
 }
+
+// C++11 CODE ---------------------------
+//int rollDye() {
+//
+//	random_device rndm;
+//	mt19937 generator(rndm());
+//	uniform_int_distribution<> range(1, 6);
+//
+//	return range(generator);
+//}
+
+
 
 // returns true if still in jail, false if out of jail
 // resets jail time and sets player's jail to false if released
@@ -361,37 +377,51 @@ bool jail(Player* player, int dice1, int dice2){
 	// if player is not currently in jail, ends method and turn continues normally
 	if (!player->getJail()) return false;
 
+	// if first or second turn in jail
 	if (player->getJailTime() < 2){
 
+		// user input: choose to pay or roll
 		cout << player->getName() << " is in jail. Would you like to pay $50 or roll for doubles? (pay/roll)" << endl;
 		string input;
 		do{
 			cin >> input;
 			transform(input.begin(), input.end(), input.begin(), ::toupper);
+
+			// if invalid choice, reprompt
 			if (input != "PAY" && input != "ROLL") cout << "Invalid choice. Please choose either pay or roll." << endl;
 		} while (input != "PAY" && input != "ROLL");
 
+		// if pay, deduct $50 and exit jail
 		if (input == "PAY"){
 			player->subtractMoney(50);
 			player->setJailTime(0);
 			return false;
 		}
+
+		// if roll and doubles, exit jail
 		if (dice1 == dice2){
 			player->setJailTime(0);
 			cout << player->getName() << " rolled doubles." << endl;
 			return false;
 		}
+
+		// if not doubles, player is still in jail, move on to next player
 		cout << "Doubles were not rolled. " << player->getName() << " remains in jail." << endl;
 		player->setJailTime(player->getJailTime()+1);
 		return true;
 	}
 
+	// if third turn in jail, player must roll
 	cout << player->getName() << " is in jail. Rolling dice automatically." << endl;
+
+	// if doubles rolled, exit jail
 	if (dice1 == dice2){
 		player->setJailTime(0);
 		cout << player->getName() << " rolled doubles." << endl;
 		return false;
 	}
+
+	// if doubles not rolled, has to pay $50, exits jail
 	cout << player->getName() << " spent 3 turns in jail. Prisoner fined $50. Releasing hardened convict." << endl;
 	player->setJailTime(0);
 	player->subtractMoney(50);
