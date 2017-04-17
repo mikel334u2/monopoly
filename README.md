@@ -25,12 +25,10 @@ GUI Expert:
 Pixel Expert:
 - Yasir Nemat
 
-Worst Programmer:
+Logic Programmers:
+- Michael Lee
 - Dominic Salamone
 
 Nonexistant:
 - Abhinav Komaravelli
 - Abhiraj Kante
-
-Bad At Their Job:
-- Michael Lee
