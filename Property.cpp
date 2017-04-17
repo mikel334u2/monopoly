@@ -42,8 +42,9 @@ int Property::getHousePrice(){
 }
 
 int Property::getRent(){
+
 	if (owner < 0) return 0;
-	else if (inMonopoly && nHouses == 0) return rent[nHouses] * 2;
+	else if (inMonopoly && (nHouses == 0)) return rent[nHouses] * 2;
 	return rent[nHouses];
 }
 

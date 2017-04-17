@@ -1,417 +1,21 @@
-#include <SFML/Graphics.hpp>
-#include <SFML/Graphics/Text.hpp>
-#include <SFML/Graphics/Font.hpp>
-
+//#include <chrono> --------------------
 #include <iostream>
 #include <string>
 #include <exception>
 #include <vector>
 #include <algorithm>
-#include <chrono>
+#include <cstdlib>
+#include <ctime>
 //#include <random> --------------------------
-
 #include "mono.h"
 //#include "Player.cpp" --------------------------
 //#include "Property.cpp" --------------------------
 //#include "boardView.cpp" -------------------------
-
 using namespace std;
-using namespace sf;
 
-int main(int argc, const char * argv[]){
 
-    //Filepath variable
-    std::string filepath = "Danie//Documents//GitHub//monopoly//Gui//Gui//";
+int main(){
 
-    // GUI SETUP
-	
-	
-	
-	// creates the window that loads the GUI
-    	RenderWindow app(VideoMode(2030, 1600), "Monopoly" );
-	
-	// if you want to create rectangles this is an example of it
-	// RectangleShape rec(Vector2f(100, 100));
-	
-	app.setFramerateLimit(60);
-	
-	//font variable to hold font for the property text
-    	Font font;
-    	
-    	//loads the font
-    	if (!font.loadFromFile(filepath + "8-BIT WONDER.TTF")){
-		cout<<"error"<<endl;
-	}
-	
-	//font variable to hold font for the player/budget text
-	Font font2;
-
-	//loads the font
-	if(!font2.loadFromFile(filepath + "Arial.ttf")){
-		cout<<"error"<<endl;
-	}
-	
-	 //Text is a variable that holds the desired strings to display on the GUI
-	//    Text playerName;
-	//    Text playerName2;
-	//    Text playerName3;
-	//    Text playerName4;
-
-	vector <Text> playerName;
-
-	//    Text budget;
-	//    Text budget2;
-	//    Text budget3;
-	//    Text budget4;
-
-	vector <Text> budget;
-
-	Text propertiesText;
-	
-	//use this varibale to store input from the cosole and use the setString method which is shown on line 82 to set a string to the Text varables (they only accept strings)
-	string input = "";
-
-	//the methods for Text speak for themselves as to what thet do
-	//    
-	//    playerName.setCharacterSize(40);
-	//    playerName.setFillColor(Color::Color(62, 70, 255, 255));
-	//    playerName.setFont(font2);
-	//    playerName.setString("Player: Harsh" + input);
-	//    budget.setCharacterSize(35);
-	//    budget.setFillColor(Color::Color(62, 70, 255, 255));
-	//    budget.setFont(font2);
-	//    budget.setString("Budget: $1500");
-	//    
-	//    playerName2.setCharacterSize(40);
-	//    playerName2.setFillColor(Color::Color(255, 29, 29, 255));
-	//    playerName2.setFont(font2);
-	//    playerName2.setString("Player: Yasir" + input);
-	//    budget2.setCharacterSize(35);
-	//    budget2.setFillColor(Color::Color(255, 29, 29, 255));
-	//    budget2.setFont(font2);
-	//    budget2.setString("Budget: $1500");
-
-	//    playerName3.setCharacterSize(40);
-	//    playerName3.setFillColor(Color::Color(0, 151, 18, 255));
-	//    playerName3.setFont(font2);
-	//    playerName3.setString("Player: Dominic" + input);
-	//    budget3.setCharacterSize(35);
-	//    budget3.setFillColor(Color::Color(0, 151, 18, 255));
-	//    budget3.setFont(font2);
-	//    budget3.setString("Budget: $1500");
-
-	//    playerName4.setCharacterSize(40);
-	//    playerName4.setFillColor(Color::Color(134, 21, 176, 255));
-	//    playerName4.setFont(font2);
-	//    playerName4.setString("Player: Daniel" + input);
-	//    budget4.setCharacterSize(35);
-	//    budget4.setFillColor(Color::Color(134, 21, 176, 255));
-	//    budget4.setFont(font2);
-	//    budget4.setString("Budget: $1500");
-
-
-
-
-
-
-	propertiesText.setCharacterSize(25);
-	propertiesText.setFillColor(Color::Blue);
-	propertiesText.setFont(font);
-	propertiesText.setString("Properties Owned");
-
-
-	//these variables will hold the position of the player on the tile. Tile starts at Go and is value 0, tile 1 is mediterannean avenue, tile 2 is baltic avenue.....etc.
-	//increase the tilecounter+=dieValue (if you want to). I made 4 because 1 for each player. You guys can decide how you wanna do it
-	int tileCounter = 0;
-	//    int tileCounter2 = 0;
-	//    int tileCounter3 = 0;
-	//    int tileCounter4 = 0;
-
-
-	//Texture holds the value for each image
-	//board texture
-	Texture board;
-
-
-	//all the pieces textures
-	Texture robot;
-	Texture Car;
-	Texture Dog;
-	Texture Iron;
-	Texture Phone;
-	Texture PotOfGold;
-	Texture Ship;
-	Texture Thimble;
-
-	//textures for those sexy vertical and horizonal lines
-	Texture vLine;
-	Texture hLine;
-
-	//all the tiles textures
-	Texture tile0;
-	Texture tile1;
-	Texture tile2;
-	Texture tile3;
-	Texture tile4;
-	Texture tile5;
-	Texture tile6;
-	Texture tile7;
-	Texture tile8;
-	Texture tile9;
-	Texture tile10;
-	Texture tile11;
-	Texture tile12;
-	Texture tile13;
-	Texture tile14;
-	Texture tile15;
-	Texture tile16;
-	Texture tile17;
-	Texture tile18;
-	Texture tile19;
-	Texture tile20;
-	Texture tile21;
-	Texture tile22;
-	Texture tile23;
-	Texture tile24;
-	Texture tile25;
-	Texture tile26;
-	Texture tile27;
-	Texture tile28;
-	Texture tile29;
-	Texture tile30;
-	Texture tile31;
-
-
-	//all the property textures
-	Texture prop1;
-	Texture prop2;
-	Texture prop3;
-	Texture prop4;
-	Texture prop5;
-	Texture prop6;
-	Texture prop7;
-	Texture prop8;
-	Texture prop9;
-	Texture prop10;
-	Texture prop11;
-	Texture prop12;
-	Texture prop13;
-	Texture prop14;
-	Texture prop15;
-	Texture prop16;
-	Texture prop17;
-	Texture prop18;
-	Texture prop19;
-	Texture prop20;
-	Texture prop21;
-	Texture prop22;
-
-
-	//loading all the pieces
-	robot.loadFromFile(filepath + "Robot.png");
-	Car.loadFromFile(filepath + "Car.png");
-	Dog.loadFromFile(filepath + "Dog.png");
-	Iron.loadFromFile(filepath + "Iron.png");
-	Phone.loadFromFile(filepath + "Phone.png");
-	PotOfGold.loadFromFile(filepath + "Pot of Gold.png");
-	Ship.loadFromFile(filepath + "Ship.png");
-	Thimble.loadFromFile(filepath + "Thimble.png");
-
-
-	//loading all textures
-	board.loadFromFile(filepath + "Monopoly Board.png");
-	vLine.loadFromFile(filepath + "vertical line.png");
-	hLine.loadFromFile(filepath + "horizontal line.png");
-	tile0.loadFromFile(filepath + "Go.png");
-	tile1.loadFromFile(filepath + "Mediterranian Avenue.png");
-	tile2.loadFromFile(filepath + "Baltic Avenue.png");
-	tile3.loadFromFile(filepath + "Income Tax.png");
-	tile4.loadFromFile(filepath + "Oriental Avenue.png");
-	tile5.loadFromFile(filepath + "Community Chest1.png");
-	tile6.loadFromFile(filepath + "Vermont Avenue.png");
-	tile7.loadFromFile(filepath + "Connecticut Avenue.png");
-	tile8.loadFromFile(filepath + "Jail.png");
-	tile9.loadFromFile(filepath + "St Charles Place.png");
-	tile10.loadFromFile(filepath + "States Avenue.png");
-	tile11.loadFromFile(filepath + "Virginia Avenue.png");
-	tile12.loadFromFile(filepath + "Chance1.png");
-	tile13.loadFromFile(filepath + "St James Place.png");
-	tile14.loadFromFile(filepath + "Tennessee Avenue.png");
-	tile15.loadFromFile(filepath + "New York Avenue.png");
-	tile16.loadFromFile(filepath + "Free Parking.png");
-	tile17.loadFromFile(filepath + "Kentucky Avenue.png");
-	tile18.loadFromFile(filepath + "Indiana Avenue.png");
-	tile19.loadFromFile(filepath + "Illinois Avenue.png");
-	tile20.loadFromFile(filepath + "Community Chest2.png");
-	tile21.loadFromFile(filepath + "Atlantic Avenue.png");
-	tile22.loadFromFile(filepath + "Ventor Avenue.png");
-	tile23.loadFromFile(filepath + "Marvin Gardens.png");
-	tile24.loadFromFile(filepath + "Go To Jail.png");
-	tile25.loadFromFile(filepath + "Pacific Avenue.png");
-	tile26.loadFromFile(filepath + "North Carolina Avenue.png");
-	tile27.loadFromFile(filepath + "Pennsylvania Avenue.png");
-	tile28.loadFromFile(filepath + "Luxury Tax.png");
-	tile29.loadFromFile(filepath + "Park Place.png");
-	tile30.loadFromFile(filepath + "Chance2.png");
-	tile31.loadFromFile(filepath + "Boardwalk.png");
-
-
-	//loading all the properties
-	prop1.loadFromFile(filepath + "Mediterranian Avenue Label.png");
-	prop2.loadFromFile(filepath + "Atlantic Avenue Label.png");
-	prop3.loadFromFile(filepath + "Boardwalk Label.png");
-	prop4.loadFromFile(filepath + "Connecticut Avenue Label.png");
-	prop5.loadFromFile(filepath + "Illinois Avenue Label.png");
-	prop6.loadFromFile(filepath + "Indiana Avenue Label.png");
-	prop7.loadFromFile(filepath + "Baltic Avenue Label.png");
-	prop8.loadFromFile(filepath + "Kentucky Avenue Label.png");
-	prop9.loadFromFile(filepath + "Marvin Gardens Label.png");
-	prop10.loadFromFile(filepath + "New York Avenue Label.png");
-	prop11.loadFromFile(filepath + "North Carolina Ave Label.png");
-	prop12.loadFromFile(filepath + "Oriental Avenue Label.png");
-	prop13.loadFromFile(filepath + "Park Place Label.png");
-	prop14.loadFromFile(filepath + "Pennsylvania Avenue Label.png");
-	prop15.loadFromFile(filepath + "St Charles Place Label.png");
-	prop16.loadFromFile(filepath + "St James Place Label.png");
-	prop17.loadFromFile(filepath + "States Avenue Label.png");
-	prop18.loadFromFile(filepath + "Tennessee Avenue Label.png");
-	prop19.loadFromFile(filepath + "Ventor Avenue Label.png");
-	prop20.loadFromFile(filepath + "Vermont Label.png");
-	prop21.loadFromFile(filepath + "Virginia Avenue Label.png");
-	prop22.loadFromFile(filepath + "Pacific Avenue Label.png");
-
-
-
-
-
-
-	//all the textures in a nice array
-	Texture array [32] = {tile0, tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8, tile9, tile10, tile11, tile12, tile13, tile14, tile15, tile16, tile17, tile18, tile19, tile20, tile21, tile22, tile23, tile24, tile25, tile26, tile27, tile28, tile29, tile30, tile31};
-
-
-	//all the properties in a vector (shouldve done the textures in a vector too but forgot they existed at the time so oh well)
-
-	vector <Texture> propTextures;
-	propTextures.push_back(prop1);
-	propTextures.push_back(prop2);
-	propTextures.push_back(prop3);
-	propTextures.push_back(prop4);
-	propTextures.push_back(prop5);
-	propTextures.push_back(prop6);
-	propTextures.push_back(prop7);
-	propTextures.push_back(prop8);
-	propTextures.push_back(prop9);
-	propTextures.push_back(prop10);
-	propTextures.push_back(prop11);
-	propTextures.push_back(prop12);
-	propTextures.push_back(prop13);
-	propTextures.push_back(prop14);
-	propTextures.push_back(prop15);
-	propTextures.push_back(prop16);
-	propTextures.push_back(prop17);
-	propTextures.push_back(prop18);
-	propTextures.push_back(prop19);
-	propTextures.push_back(prop20);
-	propTextures.push_back(prop21);
-	propTextures.push_back(prop22);
-
-
-
-
-
-
-
-	//The Sprite variable has textures object as you can (board) (tile0)
-
-	//You have to turn the textures into sprites in order to draw them on the screen, move them around, scale them, or anything your heart desires.
-
-	Sprite background (board);
-
-	Sprite robotPiece(robot);
-	Sprite carPiece (Car);
-	Sprite dogPiece (Dog);
-	Sprite ironPiece (Iron);
-	Sprite phonePiece (Phone);
-	Sprite potOfGoldPiece (PotOfGold);
-	Sprite shipPiece (Ship);
-	Sprite thimblePiece (Thimble);
-
-
-	Sprite verticalLine(vLine);
-	Sprite horizontalLine(hLine);
-	Sprite secHorizontalLine(hLine);
-
-	vector <Sprite> liveTileTextures;    //holds all the tiles in a Sprite vector. Use this information to dynamically update the tiles on the screen in the live tile section on the upper right
-	vector <Sprite> property;            //holds all the properties in a sprite vector. Use this information to dynamically add or remove properties on/from the screen
-
-
-
-	//puts all the property textures in the property sprite
-	for(int i =0; i<propTextures.size(); i++){
-
-		Sprite newProperty;
-		newProperty.setTexture(propTextures[i]);
-
-		property.push_back(newProperty);
-	}
-
-	// puts all the tile textures in the liveTileTexture sprite
-	for(int i =0; i!=32; i++){
-
-		Sprite newTile;
-		newTile.setTexture(array[i]);
-
-		liveTileTextures.push_back(newTile);
-
-	}
-
-
-
-
-
-	// moving objects
-
-	// you guys are smart so i thing you can figure it out. The values inside the .move method is based on pixels. P.S. The total pixels the window is made up of is (2030, 1600) which is showcased in line 26
-
-	liveTileTextures[tileCounter].move(1612, 0);
-	verticalLine.move(1601,0);
-
-	horizontalLine.move(1610,421);
-	secHorizontalLine.move(1610,1308);
-
-
-	// I leave the movement of the pieces to you smart guys
-    
-	robotPiece.scale(1.5, 1.5);
-	robotPiece.move(40, 1280);
-	carPiece.move(40,1450);
-	dogPiece.move(40,1450);
-	ironPiece.move(40,1450);
-	phonePiece.move(40,1450);
-	potOfGoldPiece.move(40,1450);
-	shipPiece.move(40,1450);
-	thimblePiece.move(40,1450);
-	
-	propertiesText.move(1627, 430);
-	property[1].move(1620, 480);    //make sure you change the index for this otherwise it wont move properly. So if you change the index in the .draw method for property it wont be in the right position since only index one is moved.
-
-
-	// playerName.move(1616, 1311);
-	// budget.move(1616,1345);
-
-	// playerName2.move(1616, 1382);
-	// budget2.move(1616, 1418);
-
-	// playerName3.move(1616, 1455);
-	// budget3.move(1616,1489);
-
-	// playerName4.move(1616, 1523);
-	// budget4.move(1616, 1557);
-
-	board.setSmooth(true);
-	
-	// END GUI SETUP
-	
 	int nPlayers = 0;
 
 	cout << "Welcome to Monopoly!" << endl;
@@ -454,39 +58,7 @@ int main(int argc, const char * argv[]){
 
 		// add name to names vector
 		names.push_back(input);
-		Text pla;
-		pla.setString(input);
-		playerName.push_back(pla);
-		playerName.at(i).setCharacterSize(40);
-		playerName.at(i).setFillColor(Color::Color(62, 70, 255, 255));
-		playerName.at(i).setFont(font2); //----------------------------
 	}
-
-	for(int i =0; i<playerName.size(); i++){
-
-		Text budgetNew;
-		budgetNew.setString("Budget: 1500");
-		budget.push_back(budgetNew);
-		budget.at(i).setCharacterSize(35);
-		budget.at(i).setFillColor(Color::Color(62, 70, 255, 255));
-		budget.at(i).setFont(font2);
-	}
-	
-	int move0=0;
-
-	for(int i=0; i<budget.size(); i++){
-		budget.at(i).move(1616, 1345+move0);
-		move0=move0+73;
-	}
-
-
-
-	int move = 0;
-	for(int i=0; i<playerName.size(); i++){
-		playerName.at(i).move(1616, 1311+move);
-		move=move+71;
-	}
-	
 
 	// adding possible pieces to pieces vector
 	const string pcs[] = {"TERRIER","IRON","SHIP","CAR","POT","ROBOT","THIMBLE","PHONE"};
@@ -557,7 +129,7 @@ int main(int argc, const char * argv[]){
 	// creates main vector of property pointers
 	vector<Property*> properties;
 	for (int i = 0; i < 22; i++){
-		Property* property = new Property(propertyNames[i],propertyColor[i],i,propertyPrice[i],propertyHousePrice[i],initialRent[22],
+		Property* property = new Property(propertyNames[i],propertyColor[i],i,propertyPrice[i],propertyHousePrice[i],initialRent[i],
 				oneHouseRent[i],twoHouseRent[i],threeHouseRent[i],fourHouseRent[i],fiveHouseRent[i]);
 		properties.push_back(property);
 	}
@@ -573,63 +145,16 @@ int main(int argc, const char * argv[]){
 	int dice2 = 0;
 	Player* currPlayer; // current player's turn
 	Property* propertyClass; // pointer to property at landed location
-	int check = 0;
-	
-	while (app.isOpen()){
-		
-		
-		Event e;
-		while(app.pollEvent(e)){
 
-		    if(e.type==Event::Closed){
-
-			app.close();
-
-		    }
-
-		}
-		
-		// this line of code is an example of how key presses can be used but i don't think we will need it. This is just for reference
-		// if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		// {
-		//    // left key is pressed: move our character
-		//    robotPiece.move(1, 0);
-		//}
-
-
-
-		// .draw function is responsible for actually "drawing" or displaying our objects on the window. SO MAKE SURE YOU KNOW WHAT TO DRAW AND WHEN!!!!!!!!!!!!!
-		app.draw(background);
-		app.draw(liveTileTextures[tileCounter]);
-		app.draw(verticalLine);
-		app.draw(horizontalLine);
-		app.draw(secHorizontalLine);
-		for(int i=0; i<playerName.size();i++)
-		    app.draw(playerName[i]);
-
-		for(int i=0; i<budget.size();i++)
-		app.draw(budget[i]);
-
-		app.draw(propertiesText);
-		app.draw(property[1]);     //change index for this to dynamically update the property and so that it can be moves in the right position. May need to be put in an if statement if we have to check what people have and dont
-
-		app.draw(robotPiece);
-		app.display();             //this opens the window that displays all our drawings
-
-
-		app.clear(sf::Color(216, 255, 232, 45));      //This is responible for changing the background of the window
-
-		
+	while (true){
 
 		currPlayer = players[turn];
 
 		cout << "\n" << currPlayer->getName() << "'s turn. What would you like to do?" << endl << endl;
-		while (menu(currPlayer));
+		while (menu(currPlayer, properties));
 
 		// roll dice, determine doubles
-		dice1 = rollDye();
-		dice2 = rollDye();
-		doubles = (dice1 == dice2) ? true : false;
+
 
 		// if still in jail, go to next player's turn
 		if (jail(currPlayer, dice1, dice2)){
@@ -637,10 +162,21 @@ int main(int argc, const char * argv[]){
 			continue;
 		}
 
+
+
 		// if just out of jail, make doubles false no matter what
 		if (currPlayer->getJail()){
 			doubles = false;
 			currPlayer->changeJail();
+		}
+		else {
+			cout << "Press ENTER to roll dice." << endl;
+			dice1 = rollDye();
+			cin.ignore();
+			cin.ignore();
+			dice2 = rollDye();
+			doubles = (dice1 == dice2) ? true : false;
+			cout << "You rolled a " << dice1 << " and a " << dice2 << "." << endl;
 		}
 
 		// if doubles rolled, count number of doubles
@@ -648,6 +184,7 @@ int main(int argc, const char * argv[]){
 
 		// if number of doubles is 3, send player to jail
 		if (currPlayer->getDoubleTime() >= 3){
+			cout << currPlayer->getName() << " was sent to jail." << endl;
 			currPlayer->changeJail();
 			currPlayer->setLocation(8);
 			currPlayer->setDoubleTime(0);
@@ -678,12 +215,14 @@ int main(int argc, const char * argv[]){
 		// Mediterranean Ave
 		case 1:
 			propertyClass = properties[0];
+			cout << "You landed on " << propertyClass->getName() << "!" << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// Baltic Ave
 		case 2:
 			propertyClass = properties[1];
+			cout << "You landed on " << propertyClass->getName() << "!" << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
@@ -696,6 +235,7 @@ int main(int argc, const char * argv[]){
 		// Oriental Ave
 		case 4:
 			propertyClass = properties[2];
+			cout << "You landed on " << propertyClass->getName() << "!" << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
@@ -708,12 +248,14 @@ int main(int argc, const char * argv[]){
 		// Vermont Ave
 		case 6:
 			propertyClass = properties[3];
+			cout << "You landed on " << propertyClass->getName() << "!" << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// Connecticut Ave
 		case 7:
 			propertyClass = properties[4];
+			cout << "You landed on " << propertyClass->getName() << "!" << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
@@ -725,18 +267,21 @@ int main(int argc, const char * argv[]){
 		// St. Charles Pl
 		case 9:
 			propertyClass = properties[5];
+			cout << "You landed on " << propertyClass->getName() << "!" << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// States Ave
 		case 10:
 			propertyClass = properties[6];
+			cout << "You landed on " << propertyClass->getName() << "!" << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// Virginia Ave
 		case 11:
 			propertyClass = properties[7];
+			cout << "You landed on " << propertyClass->getName() << "!" << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
@@ -749,41 +294,47 @@ int main(int argc, const char * argv[]){
 		// St. James Pl
 		case 13:
 			propertyClass = properties[8];
+			cout << "You landed on " << propertyClass->getName() << "!" << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// Tennessee Ave
 		case 14:
 			propertyClass = properties[9];
+			cout << "You landed on " << propertyClass->getName() << "!" << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// NY Ave
 		case 15:
 			propertyClass = properties[10];
+			cout << "You landed on " << propertyClass->getName() << "!" << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// Free Parking
 		case 16:
-			cout << "FREE PARKING!!" << endl;
+			cout << "You landed on FREE PARKING!!" << endl;
 			break;
 
 		// Kentucky Ave
 		case 17:
 			propertyClass = properties[11];
+			cout << "You landed on " << propertyClass->getName() << "!" << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// Indiana Ave
 		case 18:
 			propertyClass = properties[12];
+			cout << "You landed on " << propertyClass->getName() << "!" << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// Illinois Ave
 		case 19:
 			propertyClass = properties[13];
+			cout << "You landed on " << propertyClass->getName() << "!" << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
@@ -796,24 +347,27 @@ int main(int argc, const char * argv[]){
 		// Atlantic Ave
 		case 21:
 			propertyClass = properties[14];
+			cout << "You landed on " << propertyClass->getName() << "!" << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// Ventor Ave
 		case 22:
 			propertyClass = properties[15];
+			cout << "You landed on " << propertyClass->getName() << "!" << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// Marvin Gardens
 		case 23:
 			propertyClass = properties[16];
+			cout << "You landed on " << propertyClass->getName() << "!" << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// Go to Jail
 		case 24:
-			cout << "GO TO JAIL." << endl;
+			cout << "Darn! You landed on GO TO JAIL." << endl;
 			currPlayer->changeJail();
 			currPlayer->setLocation(8);
 			currPlayer->setDoubleTime(0);
@@ -822,30 +376,34 @@ int main(int argc, const char * argv[]){
 		// Pacific Ave
 		case 25:
 			propertyClass = properties[17];
+			cout << "You landed on " << propertyClass->getName() << "!" << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// NC Ave
 		case 26:
 			propertyClass = properties[18];
+			cout << "You landed on " << propertyClass->getName() << "!" << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// Penn Ave
 		case 27:
 			propertyClass = properties[19];
+			cout << "You landed on " << propertyClass->getName() << "!" << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
 		// Luxury Tax
 		case 28:
-			cout << "Luxury Tax. Pay $200." << endl;
+			cout << "You landed on LUXURY TAX. Pay $200." << endl;
 			currPlayer->subtractMoney(200);
 			break;
 
 		// Park Place
 		case 29:
 			propertyClass = properties[20];
+			cout << "You landed on " << propertyClass->getName() << "!" << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
@@ -858,6 +416,7 @@ int main(int argc, const char * argv[]){
 		// Boardwalk
 		case 31:
 			propertyClass = properties[21];
+			cout << "You landed on " << propertyClass->getName() << "!" << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
@@ -873,6 +432,11 @@ int main(int argc, const char * argv[]){
 
 		// temporary code
 		// players.erase(players.begin() + players.size() - 1);
+
+		if (currPlayer->getMoney() < 0){
+			cout << "You are bankrupt. You lose :(" << endl;
+			players.erase(players.begin() + turn);
+		}
 
 		// if 1 player left, end game
 		if (players.size() == 1){
@@ -895,26 +459,12 @@ int main(int argc, const char * argv[]){
 
 		// next turn
 		turn = (turn + 1) % nPlayers;
-		
-		check++;
-        	cout<<check<<endl;
 	}
-	
-	// uncomment to draw the pieces on screen. Should be around go. If not check the .move method for piece.
-	//        
-// 	app.draw(carPiece);
-// 	app.draw(shipPiece);
-// 	app.draw(potOfGoldPiece);
-// 	app.draw(thimblePiece);
-// 	app.draw(phonePiece);
-// 	app.draw(dogPiece);
-// 	app.draw(ironPiece);
-
-	return 0;
 }
 
 // C++98 CODE ---------------------------
 int rollDye() {
+	srand(time(0));
 	return rand() % 6 + 1;
 }
 
@@ -932,7 +482,7 @@ int rollDye() {
 
 // Method: handles the condition of player being in jail
 // returns true if still in jail, false if out of jail
-bool jail(Player* player, int dice1, int dice2){
+bool jail(Player* player, int& dice1, int& dice2){
 
 	// if player is not currently in jail, ends method and turn continues normally
 	if (!player->getJail()) return false;
@@ -951,12 +501,20 @@ bool jail(Player* player, int dice1, int dice2){
 			if (input != "PAY" && input != "ROLL") cout << "Invalid choice. Please choose either pay or roll." << endl;
 		} while (input != "PAY" && input != "ROLL");
 
+		cout << "Press ENTER to roll dice." << endl;
+		dice1 = rollDye();
+		cin.ignore();
+		cin.ignore();
+		dice2 = rollDye();
+
 		// if pay, deduct $50 and exit jail
 		if (input == "PAY"){
 			player->subtractMoney(50);
 			player->setJailTime(0);
 			return false;
 		}
+
+		cout << "You rolled a " << dice1 << " and a " << dice2 << "." << endl;
 
 		// if roll and doubles, exit jail
 		if (dice1 == dice2){
@@ -972,7 +530,15 @@ bool jail(Player* player, int dice1, int dice2){
 	}
 
 	// if third turn in jail, player must roll
-	cout << player->getName() << " is in jail. Rolling dice automatically." << endl;
+	cout << player->getName() << " is in jail. Rolling dice." << endl;
+
+	cout << "Press ENTER to roll dice." << endl;
+	dice1 = rollDye();
+	cin.ignore();
+	cin.ignore();
+	dice2 = rollDye();
+
+	cout << "You rolled a " << dice1 << " and a " << dice2 << "." << endl;
 
 	// if doubles rolled, exit jail
 	if (dice1 == dice2){
@@ -982,7 +548,7 @@ bool jail(Player* player, int dice1, int dice2){
 	}
 
 	// if doubles not rolled, has to pay $50, exits jail
-	cout << player->getName() << " spent 3 turns in jail. Prisoner fined $50. Releasing hardened convict." << endl;
+	cout << player->getName() << " did not roll doubles and has spent 3 turns in jail. Prisoner fined $50. Releasing hardened convict." << endl;
 	player->setJailTime(0);
 	player->subtractMoney(50);
 	return false;
@@ -1038,14 +604,14 @@ void monopoly(Player* player){
 
 	vector<Property*> properties = player->getProperties();
 
-	int purple;
-	int lblue;
-	int pink;
-	int orange;
-	int red;
-	int yellow;
-	int green;
-	int dblue;
+	int purple = 0;
+	int lblue = 0;
+	int pink = 0;
+	int orange = 0;
+	int red = 0;
+	int yellow = 0;
+	int green = 0;
+	int dblue = 0;
 
 	for(unsigned int i = 0; i < properties.size(); i++){
 
@@ -1135,14 +701,16 @@ void chance(Player* player) {
 }
 
 // Method: Prints menu and looks for user input
-bool menu(Player* player){
+bool menu(Player* player, vector<Property*> allProps){
 
 	vector<Property*> properties = player->getProperties();
 
-	cout << "1. Display player info" << endl; // money, properties, location, jail status
-	cout << "2. Roll dice" << endl;
+	cout << "1. Proceed with turn" << endl; // money, properties, location, jail status
+	cout << "2. Display player info" << endl;
 	cout << "3. Buy/sell houses" << endl;
 	// cout << "4. Mortgage property" << endl;
+	cout << "4. Show visualization for properties held" << endl;
+	cout << "5. Exit game" << endl;
 
 	int choice;
 	while (true){
@@ -1157,41 +725,168 @@ bool menu(Player* player){
 		}
 
 		// if not between 1-3, reprompt
-		if (choice > 3 || choice < 1){
+		if (choice > 5 || choice < 1){
 			cout << "Invalid input. Please try again: ";
 		}
 		else break;
 	}
+	cout << endl;
 
-	if (choice == 1){
-		cout << "You have $" << player->getMoney() << ". You own ";
+	if (choice == 2){
+		cout << "You have $" << player->getMoney() << "." << endl;
+		cout << "You own ";
 		if (!properties.empty()){
 			for (unsigned int i=0; i < properties.size(); i++){
 				if (i != properties.size() - 1) cout << properties[i]->getName() << ", ";
-				else cout << properties[i]->getName() << ". ";
+				else cout << properties[i]->getName() << "." << endl;
 			}
 		}
-		else cout << "no properties. ";
-		cout << "You are located at location " << player->getLocation() << ". ";
+		else cout << "no properties." << endl;
+		cout << "You are located at location " << player->getLocation() << "." << endl;
 		if (player->getJail()){
-			cout << "You are in turn #" << player->getJailTime() + 1 << " in jail.";
+			cout << "You are in turn #" << player->getJailTime() + 1 << " in jail." << endl;
 		}
-		cout << endl;
+		if (player->getMonopoly()){
+			cout << "You have at least one MONOPOLY." << endl;
+		}
 		return true;
 	}
 
 	else if (choice == 3){
 		if (player->getMonopoly()){
-			buildHouses();
+			buildHouses(player, properties);
 		}
 		else {
 			cout << "You do not have a monopoly. Unable to build houses." << endl;
 		}
 		return true;
 	}
+	else if (choice == 4){
+
+		for (unsigned int i = 0; i < allProps.size(); i++){
+			if (find(properties.begin(), properties.end(), allProps[i]) != properties.end()){
+				cout << "X ";
+			}
+			else cout << "O ";
+			if (i == 1 || i == 4 || i == 7 || i == 10 || i == 13 || i == 16 || i == 19) cout << "| ";
+		}
+		cout << endl << endl;
+		return true;
+	}
+	else if (choice == 5){
+		exit(EXIT_SUCCESS);
+	}
+
 	return false;
 }
 
-void buildHouses(){
+void buildHouses(Player* player, vector<Property*> properties){
 
+	Property* property;
+
+	cout << "Would you like to buy or sell houses? (buy/sell)" << endl;
+	string input;
+	do{
+		cin >> input;
+		transform(input.begin(), input.end(), input.begin(), ::toupper);
+
+		// if invalid choice, reprompt
+		if (input != "BUY" && input != "SELL") cout << "Invalid choice. Please choose either buy or sell." << endl;
+	} while (input != "BUY" && input != "SELL");
+
+	if (input == "SELL"){
+
+		bool exists = false;
+		cout << "Which property do you want to sell houses on?" << endl;
+		cin >> input;
+		transform(input.begin(), input.end(), input.begin(), ::toupper);
+
+		for (unsigned int i = 0; i < properties.size(); i++){
+			if (input == properties[i]->getName()){
+				property = properties[i];
+				exists = true;
+			}
+		}
+		if (!exists){
+			cout << "Property not found. Returning to main menu." << endl;
+			return;
+		}
+		if (property->getHouses() == 0){
+			cout << "No houses on this property to sell. Returning to main menu." << endl;
+			return;
+		}
+
+		int in;
+		cout << "How many houses do you want to sell?" << endl;
+		while (true){
+			// user input: in
+			cin >> in;
+
+			// if not an integer, clear buffer and reprompt
+			if (!cin){
+				cin.clear();
+				while (cin.get() != '\n');
+				in = 0;
+			}
+
+			// if not between 1-3, reprompt
+			if (in > property->getHouses() || in < 1){
+				cout << "Invalid input. Please try again: ";
+			}
+			else break;
+		}
+
+		property->setHouses(property->getHouses() - in);
+		player->addMoney(in * property->getHousePrice() / 2);
+		cout << "You earned $" << in * property->getHousePrice() / 2 << "." << endl;
+	}
+	else {
+		bool exists = false;
+		cout << "Which property do you want to buy houses on?" << endl;
+		cin >> input;
+		transform(input.begin(), input.end(), input.begin(), ::toupper);
+
+		for (unsigned int i = 0; i < properties.size(); i++){
+			if (input == properties[i]->getName()){
+				property = properties[i];
+				exists = true;
+			}
+		}
+		if (!exists){
+			cout << "Property not found. Returning to main menu." << endl;
+			return;
+		}
+
+		if (property->getHouses() == 5){
+			cout << "Max number of houses already reached. Returning to main menu." << endl;
+			return;
+		}
+
+		int in;
+		cout << "How many houses do you want to buy?" << endl;
+		while (true){
+			// user input: in
+			cin >> in;
+
+			// if not an integer, clear buffer and reprompt
+			if (!cin){
+				cin.clear();
+				while (cin.get() != '\n');
+				in = 0;
+			}
+
+			// if not between 1-3, reprompt
+			if (in > 5 - property->getHouses() || in < 1){
+				cout << "Invalid input. Please try again: ";
+			}
+			else break;
+		}
+
+		if (player->getMoney() < in * property->getHousePrice()){
+			cout << "Insufficient funds. Returning to main menu." << endl;
+			return;
+		}
+		property->setHouses(property->getHouses() + in);
+		player->subtractMoney(in * property->getHousePrice());
+	}
 }

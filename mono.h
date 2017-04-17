@@ -79,12 +79,12 @@ public:
 };
 
 int rollDye();
-bool jail(Player*, int, int);
+bool jail(Player*, int&, int&);
 void landOnProperty(Property*, Player*, int, vector<Player*>);
 void monopoly(Player*);
 void communityChest(Player*);
 void chance(Player*);
-bool menu(Player*);
-void buildHouses();
+bool menu(Player*, vector<Property*>);
+void buildHouses(Player*, vector<Property*>);
 
 #endif /* MONO_H_ */
