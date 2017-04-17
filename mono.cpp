@@ -1,4 +1,3 @@
-//#include <chrono> --------------------
 #include <iostream>
 #include <string>
 #include <exception>
@@ -7,12 +6,13 @@
 #include <cstdlib>
 #include <ctime>
 //#include <random> --------------------------
+
 #include "mono.h"
 //#include "Player.cpp" --------------------------
 //#include "Property.cpp" --------------------------
 //#include "boardView.cpp" -------------------------
-using namespace std;
 
+using namespace std;
 
 int main(){
 
@@ -61,50 +61,50 @@ int main(){
 	}
 
 	// adding possible pieces to pieces vector
-	const string pcs[] = {"TERRIER","IRON","SHIP","CAR","POT","ROBOT","THIMBLE","PHONE"};
+	const string pcs[] = {"DOG","ROBOT","SHIP","CAR","IRON","POT","THIMBLE","PHONE"};
 	vector<string> pieces(pcs, pcs + sizeof(pcs) / sizeof(pcs[0]));
 
 	// list possible pieces
-	cout << "\nPossible pieces: ";
-	for (unsigned int i = 0; i < pieces.size(); i++){
-		if (i < 7) cout << pieces[i] << ", ";
-		else cout << pieces[i] << endl;
-	}
+//	cout << "\nPossible pieces: ";
+//	for (unsigned int i = 0; i < pieces.size(); i++){
+//		if (i < 7) cout << pieces[i] << ", ";
+//		else cout << pieces[i] << endl;
+//	}
 
-	vector<string> playPieces;
-	for(int i = 0; i < nPlayers; i++){
-		string input = "";
-
-		// while input is not in pieces vector
-		while(find(pieces.begin(), pieces.end(), input) == pieces.end()){
-			cout << names[i] << ", please choose your piece: ";
-
-			// ask for the piece the player wants
-			cin >> input;
-			transform(input.begin(), input.end(), input.begin(), ::toupper);
-
-			// if the piece input cannot be found (doesn't exist), reprompt
-			if(find(pieces.begin(), pieces.end(), input) == pieces.end()){
-				cout << "Invalid piece, please try again." << endl;
-			}
-		}
-
-		// add piece to playPieces
-		playPieces.push_back(input);
-
-		// remove the piece from pieces vector so that next player can't use the same piece
-		pieces.erase(remove(pieces.begin(), pieces.end(), input), pieces.end());
-	}
+//	vector<string> playPieces;
+//	for(int i = 0; i < nPlayers; i++){
+//		string input = "";
+//
+//		// while input is not in pieces vector
+//		while(find(pieces.begin(), pieces.end(), input) == pieces.end()){
+//			cout << names[i] << ", please choose your piece: ";
+//
+//			// ask for the piece the player wants
+//			cin >> input;
+//			transform(input.begin(), input.end(), input.begin(), ::toupper);
+//
+//			// if the piece input cannot be found (doesn't exist), reprompt
+//			if(find(pieces.begin(), pieces.end(), input) == pieces.end()){
+//				cout << "Invalid piece, please try again." << endl;
+//			}
+//		}
+//
+//		// add piece to playPieces
+//		playPieces.push_back(input);
+//
+//		// remove the piece from pieces vector so that next player can't use the same piece
+//		pieces.erase(remove(pieces.begin(), pieces.end(), input), pieces.end());
+//	}
 
 	// shows who's who
 	for (int i = 0; i < nPlayers; i++){
-		cout << names[i] << " is " << playPieces[i] << "." << endl;
+		cout << names[i] << " is " << pieces[i] << "." << endl;
 	}
 
 	// creates main vector of player pointers
 	vector<Player*> players;
 	for (int i = 0; i < nPlayers; i++){
-		Player* player = new Player(names[i],playPieces[i]);
+		Player* player = new Player(names[i],pieces[i]);
 		players.push_back(player);
 	}
 
@@ -151,18 +151,15 @@ int main(){
 		currPlayer = players[turn];
 
 		cout << "\n" << currPlayer->getName() << "'s turn. What would you like to do?" << endl << endl;
+
+		// displays menu, keeps running method while not "Proceed with turn"
 		while (menu(currPlayer, properties));
-
-		// roll dice, determine doubles
-
 
 		// if still in jail, go to next player's turn
 		if (jail(currPlayer, dice1, dice2)){
 			turn = (turn + 1) % nPlayers;
 			continue;
 		}
-
-
 
 		// if just out of jail, make doubles false no matter what
 		if (currPlayer->getJail()){
@@ -172,9 +169,13 @@ int main(){
 		else {
 			cout << "Press ENTER to roll dice." << endl;
 			dice1 = rollDye();
+
+			// halts game until ENTER pressed
 			cin.ignore();
 			cin.ignore();
 			dice2 = rollDye();
+
+			// determines doubles
 			doubles = (dice1 == dice2) ? true : false;
 			cout << "You rolled a " << dice1 << " and a " << dice2 << "." << endl;
 		}
@@ -205,6 +206,7 @@ int main(){
 		}
 
 		// main switch for determining what to do at each space
+		// for property spaces, displays location & color and runs landOnProperty()
 		switch (location){
 
 		// Go
@@ -452,11 +454,11 @@ int main(){
 		// determines if the player's properties are part of monopoly
 		monopoly(currPlayer);
 
-		// temporary code
-		// players.erase(players.begin() + players.size() - 1);
-
+		// if player is bankrupt, delete player from players vector
 		if (currPlayer->getMoney() < 0){
 			cout << "You are bankrupt. You lose :(" << endl;
+
+			// resets conditions of properties
 			vector<Property*> props = currPlayer->getProperties();
 			for (unsigned int i = 0; i < props.size(); i++){
 				props[i]->setOwner(-1);
@@ -473,13 +475,15 @@ int main(){
 			exit(EXIT_SUCCESS);
 		}
 
+		// if landed on GO TO JAIL, then move to next player
 		if (currPlayer->getJail()){
 			turn = (turn + 1) % nPlayers;
 			continue;
 		}
 
+		// redo loop without moving on to next player
 		if (doubles){
-			cout << "YOU ROLLED DOUBLES. ROLL AGAIN." << endl;
+			cout << "You rolled doubles. Roll Again!" << endl;
 			continue;
 		}
 
@@ -491,9 +495,17 @@ int main(){
 	}
 }
 
+
+// Method: generates random number from 1 to 6
+// @return random int from 1 to 6
+
 // C++98 CODE ---------------------------
 int rollDye() {
+
+	// sets random seed to the current time
 	srand(time(0));
+
+	// uses seed to generate random number
 	return rand() % 6 + 1;
 }
 
@@ -510,7 +522,8 @@ int rollDye() {
 
 
 // Method: handles the condition of player being in jail
-// returns true if still in jail, false if out of jail
+// @param player pointer to current player, int reference to the dice
+// @return true if still in jail, false if out of jail
 bool jail(Player* player, int& dice1, int& dice2){
 
 	// if player is not currently in jail, ends method and turn continues normally
@@ -530,6 +543,7 @@ bool jail(Player* player, int& dice1, int& dice2){
 			if (input != "PAY" && input != "ROLL") cout << "Invalid choice. Please choose either pay or roll." << endl;
 		} while (input != "PAY" && input != "ROLL");
 
+		// roll the dice (no matter what, dice values must be retained)
 		cout << "Press ENTER to roll dice." << endl;
 		dice1 = rollDye();
 		cin.ignore();
@@ -561,6 +575,7 @@ bool jail(Player* player, int& dice1, int& dice2){
 	// if third turn in jail, player must roll
 	cout << player->getName() << " is in jail. Rolling dice." << endl;
 
+	// roll the dice
 	cout << "Press ENTER to roll dice." << endl;
 	dice1 = rollDye();
 	cin.ignore();
@@ -585,68 +600,102 @@ bool jail(Player* player, int& dice1, int& dice2){
 }
 
 // Method: handles landing on property
+// if not owned, user can buy property or ignore it
+// if owned by someone else, pay rent to that person
+// @param Property pointer to current property, Player pointer to current player and his/her turn,
+// and vector pointer of all the players
 void landOnProperty(Property* property, Player* player, int turn, vector<Player*> players){
 
+	// gets the rent
 	int rent = property->getRent();
 	string choice;
 
+	// if rent = 0, the property is not owned
 	if (rent == 0){
+
+		// prompt to buy or ignore property
 		cout << property->getName() << " is not owned. The price is $" << property->getPrice() <<
 				". Would you like to buy " << property->getName() << "? (Y/N)" << endl;
 
 		while (true){
+
 			cin >> choice;
+
+			// if choice is yes, break out of while loop
 			if (choice == "Y" || choice == "y"){
+
+				// cost of property
 				int cost = property->getPrice();
+
+				// deduct cost from player's money
 				player->subtractMoney(cost);
+
+				// make the owner of the property the current player
 				property->setOwner(turn);
+
+				// add property to player's own property vector
 				player->addProperty(property);
 				cout << "You bought " << property->getName() << "!" << endl;
 				break;
 			}
+
+			// if choice is no, do nothing
 			else if (choice == "N" || choice == "n"){
 				cout << property->getName() << " was not bought." << endl;
 				break;
 			}
+
+			// checks input, reruns if neither
 			else cout << "Invalid choice, choose either 'Y' or 'N'" << endl;
 		}
 	}
+
+	// if the property does not belong to the current player
 	else if (turn != property->getOwner()){
 
+		// essentially the "turn" of the opponent player
 		int owner = property->getOwner();
 
+		// if there are no houses on it...
 		if (property->getHouses() == 0){
+
+			// ...and is part of a monopoly, print this statement
 			if (property->getMonopoly()){
 				cout << players[owner]->getName() << " owns " << property->getName() << " in a monopoly. You pay " <<
 						players[owner]->getName() << " $" << rent << "." << endl;
 			}
+
+			// ...and isn't part of a monopoly, print this
 			else {
 				cout << players[owner]->getName() << " owns " << property->getName() <<
 						". You pay " << players[owner]->getName() << " $" << rent << "." << endl;
 			}
 		}
+
+		// if one or more houses, print this
 		else {
 			cout << players[owner]->getName() << " owns " << property->getName() << " in a monopoly with " << property->getHouses() <<
 					" house(s). You pay " << players[owner]->getName() << " $" << rent << "." << endl;
 		}
 
+		// give money from current player to opponent (owner)
 		players[owner]->addMoney(rent);
 		player->subtractMoney(rent);
 	}
+
+	// if current player lands on own property, do nothing
 	else cout << "You landed on your own property..." << endl;
 }
 
 // Method: scans player's current properties, determines which are part of monopoly
+// Determines which colors are monopolized
+// @param player pointer to current player
 void monopoly(Player* player){
 
-	// scans through current properties and determines if any of them are monopolies
-	// so go through vector, find number of times, say, the color red occurs
-	// and (for red specifically) if occur = 3, inMonopoly = true for all red ones
-	// for loop: property->getColor()
-	// property->changeMonopoly()
-
+	// vector of player's properties
 	vector<Property*> properties = player->getProperties();
 
+	// declare counters for each color
 	int purple = 0;
 	int lblue = 0;
 	int pink = 0;
@@ -656,6 +705,7 @@ void monopoly(Player* player){
 	int green = 0;
 	int dblue = 0;
 
+	// goes through player's properties, increments if they are of a specific color
 	for(unsigned int i = 0; i < properties.size(); i++){
 
 		if (properties[i]->getColor() == "PURPLE") purple++;
@@ -668,10 +718,14 @@ void monopoly(Player* player){
 		else if (properties[i]->getColor() == "D. BLUE") dblue++;
 	}
 
+	// if at least one monopoly exists, set hasMonopoly to true for the player
 	if (purple == 2 || lblue == 3 || pink == 3 || orange == 3 || red == 3 || yellow == 3 || green == 3 || dblue == 2)
 		player->setMonopoly(true);
 
+	// vector of the monopolized colors
 	vector<string> colors = player->getColors();
+
+	// if monopoly is true for a certain color and the colors vector doesn't already have it, add it to that vector
 	if (purple == 2 && find(colors.begin(), colors.end(), "PURPLE") == colors.end()) player->addColors("PURPLE");
 	if (lblue == 3 && find(colors.begin(), colors.end(), "L. BLUE") == colors.end()) player->addColors("L. BLUE");
 	if (pink == 3 && find(colors.begin(), colors.end(), "PINK") == colors.end()) player->addColors("PINK");
@@ -681,6 +735,7 @@ void monopoly(Player* player){
 	if (green == 3 && find(colors.begin(), colors.end(), "GREEN") == colors.end()) player->addColors("GREEN");
 	if (dblue == 2 && find(colors.begin(), colors.end(), "D. BLUE") == colors.end()) player->addColors("D. BLUE");
 
+	// sets the monopoly condition of each property to true if they are part of a monopolized color region
 	for (unsigned int i = 0; i < properties.size(); i++){
 		if ((purple == 2 && properties[i]->getColor() == "PURPLE") ||
 				(lblue == 3 && properties[i]->getColor() == "L. BLUE") ||
@@ -696,9 +751,14 @@ void monopoly(Player* player){
 	}
 }
 
+// Method: determines different outcomes of random community chest draw
+// @param player pointer to current player
 void communityChest(Player* player) {
 
+	// chooses random number
 	int randNum = rand() % 6;
+
+	// text to display at index of random number
 	string communityChest[6] = {"Advance to Go (Collect $200)", "Bank error in your favor – Collect $200",
 			"Doctor's fees {fee} – Pay $50", "Income tax refund – Collect $20",
 			"Pay hospital fees of $100",  "You have won second prize in a beauty contest – Collect $10"};
@@ -727,9 +787,14 @@ void communityChest(Player* player) {
 	else player->addMoney(10);
 }
 
+// Method: determines different outcomes of random chance draw
+// @param player pointer to current player
 void chance(Player* player) {
 
+	// choose random number
 	int randNum = rand() % 5;
+
+	// text to display at index of random number
 	string chance[5] = {"Advance to Go (Collect $200)", "Pay poor tax of $15",
 			"Your building {and} loan matures – Collect $150",  "You have won a crossword competition - Collect $100",
 			"Bank pays you dividend of $50"};
@@ -743,7 +808,7 @@ void chance(Player* player) {
 	}
 
 	// decrease player's money by 15
-	else if (randNum == 1) player->subtractMoney(200);
+	else if (randNum == 1) player->subtractMoney(15);
 
 	// increase player's money by 150
 	else if (randNum == 2) player->addMoney(150);
@@ -756,14 +821,17 @@ void chance(Player* player) {
 }
 
 // Method: Prints menu and looks for user input
+// @param player pointer to current player, vector of Property pointers to all properties that exist
+// @return true if proceed with turn, false if anything else
 bool menu(Player* player, vector<Property*> allProps){
 
+	// vector of current player's properties
 	vector<Property*> properties = player->getProperties();
 
-	cout << "1. Proceed with turn" << endl; // money, properties, location, jail status
+	// print menu, options are integers
+	cout << "1. Proceed with turn" << endl;
 	cout << "2. Display player info" << endl;
 	cout << "3. Buy/sell houses" << endl;
-	// cout << "4. Mortgage property" << endl;
 	cout << "4. Show visualization for properties held" << endl;
 	cout << "5. Exit game" << endl;
 
@@ -779,7 +847,7 @@ bool menu(Player* player, vector<Property*> allProps){
 			choice = 0;
 		}
 
-		// if not between 1-3, reprompt
+		// if not between 1-5, reprompt
 		if (choice > 5 || choice < 1){
 			cout << "Invalid input. Please try again: ";
 		}
@@ -787,8 +855,13 @@ bool menu(Player* player, vector<Property*> allProps){
 	}
 	cout << endl;
 
+	// display information about the player
 	if (choice == 2){
+
+		// print how much money player has
 		cout << "You have $" << player->getMoney() << "." << endl;
+
+		// use for loop to print which properties player owns
 		cout << "You own ";
 		if (!properties.empty()){
 			for (unsigned int i=0; i < properties.size(); i++){
@@ -797,10 +870,16 @@ bool menu(Player* player, vector<Property*> allProps){
 			}
 		}
 		else cout << "no properties." << endl;
+
+		// location of player
 		cout << "You are located at location " << player->getLocation() << "." << endl;
+
+		// prints current turn in jail if in jail
 		if (player->getJail()){
 			cout << "You are in turn #" << player->getJailTime() + 1 << " in jail." << endl;
 		}
+
+		// prints current monopolies
 		if (player->getMonopoly()){
 			cout << "MONOPOLIES: ";
 			for (unsigned int i = 0; i < player->getColors().size(); i++){
@@ -808,18 +887,32 @@ bool menu(Player* player, vector<Property*> allProps){
 				else cout << player->getColors()[i] << endl;
 			}
 		}
+		cout << endl;
 		return true;
 	}
 
+	// buy/sell houses
 	else if (choice == 3){
+
+		// if they have a monopoly, they can buy/sell houses
 		if (player->getMonopoly()){
+
+			// runs options for building/demolishing houses
 			buildHouses(player, allProps);
 		}
+
+		// if they don't, exit method
 		else {
 			cout << "You do not have a monopoly. Unable to build houses." << endl;
 		}
+		cout << endl;
 		return true;
 	}
+
+	// shows visualization for the properties that the player currently has
+	// 'X' means that the property is not owned
+	// a number indicates that how many houses are on the current property
+	// the vertical lines separate properties of different colors/monopolies
 	else if (choice == 4){
 
 		for (unsigned int i = 0; i < allProps.size(); i++){
@@ -832,19 +925,28 @@ bool menu(Player* player, vector<Property*> allProps){
 		cout << endl << endl;
 		return true;
 	}
+
+	// exits game
 	else if (choice == 5){
 		exit(EXIT_SUCCESS);
 	}
 
+	// proceeds with the rest of the game
 	return false;
 }
 
+// Method: build houses on a specific property
+// @param player pointer to current player, vector of Property pointers to all possible properties
 void buildHouses(Player* player, vector<Property*> allProps){
 
+	// vector of player's properties
 	vector<Property*> properties = player->getProperties();
+
+	// vector of monopolized colors for this player
 	vector<string> colors = player->getColors();
 	vector<Property*> monoProps;
 
+	// prompt whether to buy/sell houses
 	cout << "Would you like to buy or sell houses? (buy/sell)" << endl;
 	string input;
 	do{
@@ -855,17 +957,25 @@ void buildHouses(Player* player, vector<Property*> allProps){
 		if (input != "BUY" && input != "SELL") cout << "Invalid choice. Please choose either buy or sell." << endl;
 	} while (input != "BUY" && input != "SELL");
 
+	// if user wants to sell houses...
 	if (input == "SELL"){
 
+		// pick monopoly color for which to sell houses on
 		cout << "In which monopoly would you like to sell houses? (Pick a color)" << endl;
 		cin >> input;
 		transform(input.begin(), input.end(), input.begin(), ::toupper);
+
+		// fixes potential entries for specific colors L. BLUE and D. BLUE
 		if (input == "LIGHT BLUE" || input == "L BLUE" || input == "LBLUE" || input == "L.BLUE") input = "L. BLUE";
 		if (input == "DARK BLUE" || input == "D BLUE" || input == "DBLUE" || input == "D.BLUE") input = "D. BLUE";
+
+		// if the color is not in monopolized colors vector, return to main menu
 		if (find(colors.begin(), colors.end(), input) == colors.end()){
 			cout << "Monopoly color not found. Returning to main menu." << endl;
 			return;
 		}
+
+		// put all properties of that color in same property vector
 		for (unsigned int i = 0; i < allProps.size(); i++){
 			if (input == allProps[i]->getColor()){
 				monoProps.push_back(allProps[i]);
@@ -874,10 +984,13 @@ void buildHouses(Player* player, vector<Property*> allProps){
 
 		Property* temp;
 		bool exists = false;
+
+		// prompt which property player would like to sell houses on
 		cout << "Which property do you want to sell houses on? (Must be sold evenly with other monopoly properties)" << endl;
 		cin >> input;
 		transform(input.begin(), input.end(), input.begin(), ::toupper);
 
+		// puts chosen property at front of vector
 		for (unsigned int i = 0; i < monoProps.size(); i++){
 			if (input == monoProps[i]->getName()){
 				temp = monoProps[0];
@@ -886,14 +999,20 @@ void buildHouses(Player* player, vector<Property*> allProps){
 				exists = true;
 			}
 		}
+
+		// if invalid property or a property not in the monoProps vector, return to main menu
 		if (!exists){
 			cout << "Property not found. Returning to main menu." << endl;
 			return;
 		}
+
+		// if no houses on this property, then there's nothing to sell
 		if (monoProps[0]->getHouses() == 0){
 			cout << "No houses on this property to sell. Returning to main menu." << endl;
 			return;
 		}
+
+		// if there's at least one property in the same color group that has more houses, return to main menu
 		for (unsigned int i = 1; i < monoProps.size(); i++){
 			if (monoProps[0]->getHouses() < monoProps[i]->getHouses()) exists = false;
 		}
@@ -902,21 +1021,31 @@ void buildHouses(Player* player, vector<Property*> allProps){
 			return;
 		}
 
+		// decrease number of houses in chosen property by 1
 		monoProps[0]->setHouses(monoProps[0]->getHouses() - 1);
+
+		// give money to player, which is half of the house price for the property
 		player->addMoney(monoProps[0]->getHousePrice() / 2);
 		cout << "You earned $" << monoProps[0]->getHousePrice() / 2 << "." << endl;
 	}
 	else {
 
+		// pick monopoly color for which to buy houses on
 		cout << "Which monopoly would you like to develop on? (Pick a color)" << endl;
 		cin >> input;
 		transform(input.begin(), input.end(), input.begin(), ::toupper);
+
+		// fixes potential entries for specific colors L. BLUE and D. BLUE
 		if (input == "LIGHT BLUE" || input == "L BLUE" || input == "LBLUE" || input == "L.BLUE") input = "L. BLUE";
 		if (input == "DARK BLUE" || input == "D BLUE" || input == "DBLUE" || input == "D.BLUE") input = "D. BLUE";
+
+		// if the color is not in monopolized colors vector, return to main menu
 		if (find(colors.begin(), colors.end(), input) == colors.end()){
 			cout << "Monopoly color not found. Returning to main menu." << endl;
 			return;
 		}
+
+		// put all properties of that color in same property vector
 		for (unsigned int i = 0; i < allProps.size(); i++){
 			if (input == allProps[i]->getColor()){
 				monoProps.push_back(allProps[i]);
@@ -925,10 +1054,13 @@ void buildHouses(Player* player, vector<Property*> allProps){
 
 		Property* temp;
 		bool exists = false;
+
+		// prompt which property player would like to buy houses on
 		cout << "Which property do you want to buy houses on? (Must be built evenly with other monopoly properties)" << endl;
 		cin >> input;
 		transform(input.begin(), input.end(), input.begin(), ::toupper);
 
+		// puts chosen property at front of vector
 		for (unsigned int i = 0; i < monoProps.size(); i++){
 			if (input == monoProps[i]->getName()){
 				temp = monoProps[0];
@@ -937,14 +1069,20 @@ void buildHouses(Player* player, vector<Property*> allProps){
 				exists = true;
 			}
 		}
+
+		// if invalid property or a property not in the monoProps vector, return to main menu
 		if (!exists){
 			cout << "Property not found. Returning to main menu." << endl;
 			return;
 		}
+
+		// if five houses on this property, then you can't buy anymore, returns to main menu
 		if (monoProps[0]->getHouses() == 5){
 			cout << "Max number of houses already reached. Returning to main menu." << endl;
 			return;
 		}
+
+		// if there's at least one property in the same color group that has less houses, return to main menu
 		for (unsigned int i = 1; i < monoProps.size(); i++){
 			if (monoProps[0]->getHouses() > monoProps[i]->getHouses()) exists = false;
 		}
@@ -952,12 +1090,17 @@ void buildHouses(Player* player, vector<Property*> allProps){
 			cout << "Property has more houses than monopoly properties. Returning to main menu." << endl;
 			return;
 		}
+
+		// if player doesn't have enough money to buy house, return to main menu
 		if (player->getMoney() < monoProps[0]->getHousePrice()){
 			cout << "Insufficient funds. Returning to main menu." << endl;
 			return;
 		}
 
+		// add one house to chosen property
 		monoProps[0]->setHouses(monoProps[0]->getHouses() + 1);
+
+		// subtract player's money by the price of houses for this property
 		player->subtractMoney(monoProps[0]->getHousePrice());
 		cout << "You bought a house on " << monoProps[0]->getName() << "!" << endl;
 	}
