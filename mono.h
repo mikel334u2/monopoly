@@ -1,3 +1,12 @@
+/*
+ * Michael Lee, Daniel Nazarian, Harsh Patel, King Kante, Abhi K, Yasir, and Dominic Salamone
+ *
+ * Virtual Monopoly Game, COP3503 Group Final Project
+ * Github: github.com/mikel334u2/monopoly
+ *
+ * Date Edited: 4/17/17
+ */
+
 #ifndef MONO_H_
 #define MONO_H_
 
