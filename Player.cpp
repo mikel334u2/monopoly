@@ -4,29 +4,6 @@
 #include <vector>
 using namespace std;
 
-//class Player{
-//
-//private:
-//
-//    string name;
-//    string typeOfPlace;
-//    int currentMoney;
-//    vector<Property> properties;
-//
-//public:
-//
-//    Player(string name, string piece, int money);
-//    bool hasMoney(Property property);
-//    void addHouse();
-//    string getPlayer();
-//    void setPlayer(string name);
-//    void afkCheck();
-//    bool checkMoneyForBuying();
-//    void removeProperty();
-//    void addProperty();
-//
-//};
-
 Player::Player(string n, string p){
 	name = n;
 	piece = p;
@@ -37,9 +14,8 @@ Player::Player(string n, string p){
 	doubleTime = 0;
 	hasMonopoly = false;
 	vector<Property*> properties;
+	vector<string> monoColors;
 }
-
-// bool Player::hasMonopoly(){}
 
 string Player::getName(){
 	return name;
@@ -120,4 +96,12 @@ void Player::addProperty(Property* property){
 
 vector<Property*> Player::getProperties(){
 	return properties;
+}
+
+vector<string> Player::getColors(){
+	return monoColors;
+}
+
+void Player::addColors(string color){
+	monoColors.push_back(color);
 }

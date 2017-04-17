@@ -244,7 +244,7 @@ int main(){
 
 		// Comm Chest
 		case 5:
-			cout << "You landed on COMMUNITY CHEST!" << endl;
+			cout << "You landed on COMMUNITY CHEST #1!" << endl;
 			communityChest(currPlayer);
 			break;
 
@@ -295,7 +295,7 @@ int main(){
 
 		// Chance
 		case 12:
-			cout << "You landed on CHANCE!" << endl;
+			cout << "You landed on CHANCE #1!" << endl;
 			chance(currPlayer);
 			break;
 
@@ -354,7 +354,7 @@ int main(){
 
 		// Comm Chest
 		case 20:
-			cout << "You landed on COMMUNITY CHEST!" << endl;
+			cout << "You landed on COMMUNITY CHEST #2!" << endl;
 			communityChest(currPlayer);
 			break;
 
@@ -430,7 +430,7 @@ int main(){
 
 		// Chance
 		case 30:
-			cout << "You landed on CHANCE!" << endl;
+			cout << "You landed on CHANCE #2!" << endl;
 			chance(currPlayer);
 			break;
 
@@ -457,7 +457,14 @@ int main(){
 
 		if (currPlayer->getMoney() < 0){
 			cout << "You are bankrupt. You lose :(" << endl;
+			vector<Property*> props = currPlayer->getProperties();
+			for (unsigned int i = 0; i < props.size(); i++){
+				props[i]->setOwner(-1);
+				props[i]->setMonopoly(false);
+				props[i]->setHouses(0);
+			}
 			players.erase(players.begin() + turn);
+			nPlayers--;
 		}
 
 		// if 1 player left, end game
@@ -570,7 +577,8 @@ bool jail(Player* player, int& dice1, int& dice2){
 	}
 
 	// if doubles not rolled, has to pay $50, exits jail
-	cout << player->getName() << " did not roll doubles and has spent 3 turns in jail. Prisoner fined $50. Releasing hardened convict." << endl;
+	cout << player->getName() <<
+			" did not roll doubles and has spent 3 turns in jail. Prisoner fined $50. Releasing hardened convict." << endl;
 	player->setJailTime(0);
 	player->subtractMoney(50);
 	return false;
@@ -607,8 +615,20 @@ void landOnProperty(Property* property, Player* player, int turn, vector<Player*
 
 		int owner = property->getOwner();
 
-		cout << players[owner]->getName() << " owns " << property->getName() <<
-				". You pay " << players[owner]->getName() << " $" << rent << "." << endl;
+		if (property->getHouses() == 0){
+			if (property->getMonopoly()){
+				cout << players[owner]->getName() << " owns " << property->getName() << " in a monopoly. You pay " <<
+						players[owner]->getName() << " $" << rent << "." << endl;
+			}
+			else {
+				cout << players[owner]->getName() << " owns " << property->getName() <<
+						". You pay " << players[owner]->getName() << " $" << rent << "." << endl;
+			}
+		}
+		else {
+			cout << players[owner]->getName() << " owns " << property->getName() << " in a monopoly with " << property->getHouses() <<
+					" house(s). You pay " << players[owner]->getName() << " $" << rent << "." << endl;
+		}
 
 		players[owner]->addMoney(rent);
 		player->subtractMoney(rent);
@@ -648,7 +668,19 @@ void monopoly(Player* player){
 		else if (properties[i]->getColor() == "D. BLUE") dblue++;
 	}
 
-	if (purple == 2 || lblue == 3 || pink == 3 || orange == 3 || red == 3 || yellow == 3 || green == 3 || dblue == 2) player->setMonopoly(true);
+	if (purple == 2 || lblue == 3 || pink == 3 || orange == 3 || red == 3 || yellow == 3 || green == 3 || dblue == 2)
+		player->setMonopoly(true);
+
+	vector<string> colors = player->getColors();
+	if (purple == 2 && find(colors.begin(), colors.end(), "PURPLE") == colors.end()) player->addColors("PURPLE");
+	if (lblue == 3 && find(colors.begin(), colors.end(), "L. BLUE") == colors.end()) player->addColors("L. BLUE");
+	if (pink == 3 && find(colors.begin(), colors.end(), "PINK") == colors.end()) player->addColors("PINK");
+	if (orange == 3 && find(colors.begin(), colors.end(), "ORANGE") == colors.end()) player->addColors("ORANGE");
+	if (red == 3 && find(colors.begin(), colors.end(), "RED") == colors.end()) player->addColors("RED");
+	if (yellow == 3 && find(colors.begin(), colors.end(), "YELLOW") == colors.end()) player->addColors("YELLOW");
+	if (green == 3 && find(colors.begin(), colors.end(), "GREEN") == colors.end()) player->addColors("GREEN");
+	if (dblue == 2 && find(colors.begin(), colors.end(), "D. BLUE") == colors.end()) player->addColors("D. BLUE");
+
 	for (unsigned int i = 0; i < properties.size(); i++){
 		if ((purple == 2 && properties[i]->getColor() == "PURPLE") ||
 				(lblue == 3 && properties[i]->getColor() == "L. BLUE") ||
@@ -770,14 +802,18 @@ bool menu(Player* player, vector<Property*> allProps){
 			cout << "You are in turn #" << player->getJailTime() + 1 << " in jail." << endl;
 		}
 		if (player->getMonopoly()){
-			cout << "You have at least one MONOPOLY." << endl;
+			cout << "MONOPOLIES: ";
+			for (unsigned int i = 0; i < player->getColors().size(); i++){
+				if (i != player->getColors().size() - 1) cout << player->getColors()[i] << ", ";
+				else cout << player->getColors()[i] << endl;
+			}
 		}
 		return true;
 	}
 
 	else if (choice == 3){
 		if (player->getMonopoly()){
-			buildHouses(player, properties);
+			buildHouses(player, allProps);
 		}
 		else {
 			cout << "You do not have a monopoly. Unable to build houses." << endl;
@@ -788,9 +824,9 @@ bool menu(Player* player, vector<Property*> allProps){
 
 		for (unsigned int i = 0; i < allProps.size(); i++){
 			if (find(properties.begin(), properties.end(), allProps[i]) != properties.end()){
-				cout << "X ";
+				cout << allProps[i]->getHouses() << " ";
 			}
-			else cout << "O ";
+			else cout << "X ";
 			if (i == 1 || i == 4 || i == 7 || i == 10 || i == 13 || i == 16 || i == 19) cout << "| ";
 		}
 		cout << endl << endl;
@@ -803,9 +839,11 @@ bool menu(Player* player, vector<Property*> allProps){
 	return false;
 }
 
-void buildHouses(Player* player, vector<Property*> properties){
+void buildHouses(Player* player, vector<Property*> allProps){
 
-	Property* property;
+	vector<Property*> properties = player->getProperties();
+	vector<string> colors = player->getColors();
+	vector<Property*> monoProps;
 
 	cout << "Would you like to buy or sell houses? (buy/sell)" << endl;
 	string input;
@@ -819,14 +857,32 @@ void buildHouses(Player* player, vector<Property*> properties){
 
 	if (input == "SELL"){
 
+		cout << "In which monopoly would you like to sell houses? (Pick a color)" << endl;
+		cin >> input;
+		transform(input.begin(), input.end(), input.begin(), ::toupper);
+		if (input == "LIGHT BLUE" || input == "L BLUE" || input == "LBLUE" || input == "L.BLUE") input = "L. BLUE";
+		if (input == "DARK BLUE" || input == "D BLUE" || input == "DBLUE" || input == "D.BLUE") input = "D. BLUE";
+		if (find(colors.begin(), colors.end(), input) == colors.end()){
+			cout << "Monopoly color not found. Returning to main menu." << endl;
+			return;
+		}
+		for (unsigned int i = 0; i < allProps.size(); i++){
+			if (input == allProps[i]->getColor()){
+				monoProps.push_back(allProps[i]);
+			}
+		}
+
+		Property* temp;
 		bool exists = false;
-		cout << "Which property do you want to sell houses on?" << endl;
+		cout << "Which property do you want to sell houses on? (Must be sold evenly with other monopoly properties)" << endl;
 		cin >> input;
 		transform(input.begin(), input.end(), input.begin(), ::toupper);
 
-		for (unsigned int i = 0; i < properties.size(); i++){
-			if (input == properties[i]->getName()){
-				property = properties[i];
+		for (unsigned int i = 0; i < monoProps.size(); i++){
+			if (input == monoProps[i]->getName()){
+				temp = monoProps[0];
+				monoProps[0] = monoProps[i];
+				monoProps[i] = temp;
 				exists = true;
 			}
 		}
@@ -834,44 +890,50 @@ void buildHouses(Player* player, vector<Property*> properties){
 			cout << "Property not found. Returning to main menu." << endl;
 			return;
 		}
-		if (property->getHouses() == 0){
+		if (monoProps[0]->getHouses() == 0){
 			cout << "No houses on this property to sell. Returning to main menu." << endl;
 			return;
 		}
-
-		int in;
-		cout << "How many houses do you want to sell?" << endl;
-		while (true){
-			// user input: in
-			cin >> in;
-
-			// if not an integer, clear buffer and reprompt
-			if (!cin){
-				cin.clear();
-				while (cin.get() != '\n');
-				in = 0;
-			}
-
-			// if not between 1-3, reprompt
-			if (in > property->getHouses() || in < 1){
-				cout << "Invalid input. Please try again: ";
-			}
-			else break;
+		for (unsigned int i = 1; i < monoProps.size(); i++){
+			if (monoProps[0]->getHouses() < monoProps[i]->getHouses()) exists = false;
+		}
+		if (exists){
+			cout << "Property has less houses than monopoly properties. Returning to main menu." << endl;
+			return;
 		}
 
-		property->setHouses(property->getHouses() - in);
-		player->addMoney(in * property->getHousePrice() / 2);
-		cout << "You earned $" << in * property->getHousePrice() / 2 << "." << endl;
+		monoProps[0]->setHouses(monoProps[0]->getHouses() - 1);
+		player->addMoney(monoProps[0]->getHousePrice() / 2);
+		cout << "You earned $" << monoProps[0]->getHousePrice() / 2 << "." << endl;
 	}
 	else {
+
+		cout << "Which monopoly would you like to develop on? (Pick a color)" << endl;
+		cin >> input;
+		transform(input.begin(), input.end(), input.begin(), ::toupper);
+		if (input == "LIGHT BLUE" || input == "L BLUE" || input == "LBLUE" || input == "L.BLUE") input = "L. BLUE";
+		if (input == "DARK BLUE" || input == "D BLUE" || input == "DBLUE" || input == "D.BLUE") input = "D. BLUE";
+		if (find(colors.begin(), colors.end(), input) == colors.end()){
+			cout << "Monopoly color not found. Returning to main menu." << endl;
+			return;
+		}
+		for (unsigned int i = 0; i < allProps.size(); i++){
+			if (input == allProps[i]->getColor()){
+				monoProps.push_back(allProps[i]);
+			}
+		}
+
+		Property* temp;
 		bool exists = false;
-		cout << "Which property do you want to buy houses on?" << endl;
+		cout << "Which property do you want to buy houses on? (Must be built evenly with other monopoly properties)" << endl;
 		cin >> input;
 		transform(input.begin(), input.end(), input.begin(), ::toupper);
 
-		for (unsigned int i = 0; i < properties.size(); i++){
-			if (input == properties[i]->getName()){
-				property = properties[i];
+		for (unsigned int i = 0; i < monoProps.size(); i++){
+			if (input == monoProps[i]->getName()){
+				temp = monoProps[0];
+				monoProps[0] = monoProps[i];
+				monoProps[i] = temp;
 				exists = true;
 			}
 		}
@@ -879,37 +941,24 @@ void buildHouses(Player* player, vector<Property*> properties){
 			cout << "Property not found. Returning to main menu." << endl;
 			return;
 		}
-
-		if (property->getHouses() == 5){
+		if (monoProps[0]->getHouses() == 5){
 			cout << "Max number of houses already reached. Returning to main menu." << endl;
 			return;
 		}
-
-		int in;
-		cout << "How many houses do you want to buy?" << endl;
-		while (true){
-			// user input: in
-			cin >> in;
-
-			// if not an integer, clear buffer and reprompt
-			if (!cin){
-				cin.clear();
-				while (cin.get() != '\n');
-				in = 0;
-			}
-
-			// if not between 1-3, reprompt
-			if (in > 5 - property->getHouses() || in < 1){
-				cout << "Invalid input. Please try again: ";
-			}
-			else break;
+		for (unsigned int i = 1; i < monoProps.size(); i++){
+			if (monoProps[0]->getHouses() > monoProps[i]->getHouses()) exists = false;
 		}
-
-		if (player->getMoney() < in * property->getHousePrice()){
+		if (exists){
+			cout << "Property has more houses than monopoly properties. Returning to main menu." << endl;
+			return;
+		}
+		if (player->getMoney() < monoProps[0]->getHousePrice()){
 			cout << "Insufficient funds. Returning to main menu." << endl;
 			return;
 		}
-		property->setHouses(property->getHouses() + in);
-		player->subtractMoney(in * property->getHousePrice());
+
+		monoProps[0]->setHouses(monoProps[0]->getHouses() + 1);
+		player->subtractMoney(monoProps[0]->getHousePrice());
+		cout << "You bought a house on " << monoProps[0]->getName() << "!" << endl;
 	}
 }

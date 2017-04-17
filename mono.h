@@ -47,11 +47,11 @@ private:
 	int money;
 	int location;
 	vector<Property*> properties;
-	// bool isActive;
 	bool inJail;
 	int jailTime;
 	int doubleTime;
 	bool hasMonopoly;
+	vector<string> monoColors;
 
 public:
 
@@ -76,6 +76,8 @@ public:
 	void setLocation(int);
 	void setMonopoly(bool);
 	bool getMonopoly();
+	vector<string> getColors();
+	void addColors(string);
 };
 
 int rollDye();
