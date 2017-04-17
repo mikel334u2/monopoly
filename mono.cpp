@@ -216,6 +216,7 @@ int main(){
 		case 1:
 			propertyClass = properties[0];
 			cout << "You landed on " << propertyClass->getName() << "!" << endl;
+			cout << "Location: " << location << " | Color: " << propertyClass->getColor() << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
@@ -223,6 +224,7 @@ int main(){
 		case 2:
 			propertyClass = properties[1];
 			cout << "You landed on " << propertyClass->getName() << "!" << endl;
+			cout << "Location: " << location << " | Color: " << propertyClass->getColor() << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
@@ -236,6 +238,7 @@ int main(){
 		case 4:
 			propertyClass = properties[2];
 			cout << "You landed on " << propertyClass->getName() << "!" << endl;
+			cout << "Location: " << location << " | Color: " << propertyClass->getColor() << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
@@ -249,6 +252,7 @@ int main(){
 		case 6:
 			propertyClass = properties[3];
 			cout << "You landed on " << propertyClass->getName() << "!" << endl;
+			cout << "Location: " << location << " | Color: " << propertyClass->getColor() << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
@@ -256,6 +260,7 @@ int main(){
 		case 7:
 			propertyClass = properties[4];
 			cout << "You landed on " << propertyClass->getName() << "!" << endl;
+			cout << "Location: " << location << " | Color: " << propertyClass->getColor() << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
@@ -268,6 +273,7 @@ int main(){
 		case 9:
 			propertyClass = properties[5];
 			cout << "You landed on " << propertyClass->getName() << "!" << endl;
+			cout << "Location: " << location << " | Color: " << propertyClass->getColor() << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
@@ -275,6 +281,7 @@ int main(){
 		case 10:
 			propertyClass = properties[6];
 			cout << "You landed on " << propertyClass->getName() << "!" << endl;
+			cout << "Location: " << location << " | Color: " << propertyClass->getColor() << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
@@ -282,6 +289,7 @@ int main(){
 		case 11:
 			propertyClass = properties[7];
 			cout << "You landed on " << propertyClass->getName() << "!" << endl;
+			cout << "Location: " << location << " | Color: " << propertyClass->getColor() << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
@@ -295,6 +303,7 @@ int main(){
 		case 13:
 			propertyClass = properties[8];
 			cout << "You landed on " << propertyClass->getName() << "!" << endl;
+			cout << "Location: " << location << " | Color: " << propertyClass->getColor() << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
@@ -302,6 +311,7 @@ int main(){
 		case 14:
 			propertyClass = properties[9];
 			cout << "You landed on " << propertyClass->getName() << "!" << endl;
+			cout << "Location: " << location << " | Color: " << propertyClass->getColor() << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
@@ -309,6 +319,7 @@ int main(){
 		case 15:
 			propertyClass = properties[10];
 			cout << "You landed on " << propertyClass->getName() << "!" << endl;
+			cout << "Location: " << location << " | Color: " << propertyClass->getColor() << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
@@ -321,6 +332,7 @@ int main(){
 		case 17:
 			propertyClass = properties[11];
 			cout << "You landed on " << propertyClass->getName() << "!" << endl;
+			cout << "Location: " << location << " | Color: " << propertyClass->getColor() << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
@@ -328,6 +340,7 @@ int main(){
 		case 18:
 			propertyClass = properties[12];
 			cout << "You landed on " << propertyClass->getName() << "!" << endl;
+			cout << "Location: " << location << " | Color: " << propertyClass->getColor() << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
@@ -335,6 +348,7 @@ int main(){
 		case 19:
 			propertyClass = properties[13];
 			cout << "You landed on " << propertyClass->getName() << "!" << endl;
+			cout << "Location: " << location << " | Color: " << propertyClass->getColor() << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
@@ -348,6 +362,7 @@ int main(){
 		case 21:
 			propertyClass = properties[14];
 			cout << "You landed on " << propertyClass->getName() << "!" << endl;
+			cout << "Location: " << location << " | Color: " << propertyClass->getColor() << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
@@ -355,6 +370,7 @@ int main(){
 		case 22:
 			propertyClass = properties[15];
 			cout << "You landed on " << propertyClass->getName() << "!" << endl;
+			cout << "Location: " << location << " | Color: " << propertyClass->getColor() << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
@@ -362,6 +378,7 @@ int main(){
 		case 23:
 			propertyClass = properties[16];
 			cout << "You landed on " << propertyClass->getName() << "!" << endl;
+			cout << "Location: " << location << " | Color: " << propertyClass->getColor() << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
@@ -377,6 +394,7 @@ int main(){
 		case 25:
 			propertyClass = properties[17];
 			cout << "You landed on " << propertyClass->getName() << "!" << endl;
+			cout << "Location: " << location << " | Color: " << propertyClass->getColor() << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
@@ -384,6 +402,7 @@ int main(){
 		case 26:
 			propertyClass = properties[18];
 			cout << "You landed on " << propertyClass->getName() << "!" << endl;
+			cout << "Location: " << location << " | Color: " << propertyClass->getColor() << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
@@ -391,6 +410,7 @@ int main(){
 		case 27:
 			propertyClass = properties[19];
 			cout << "You landed on " << propertyClass->getName() << "!" << endl;
+			cout << "Location: " << location << " | Color: " << propertyClass->getColor() << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
@@ -404,6 +424,7 @@ int main(){
 		case 29:
 			propertyClass = properties[20];
 			cout << "You landed on " << propertyClass->getName() << "!" << endl;
+			cout << "Location: " << location << " | Color: " << propertyClass->getColor() << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
@@ -417,6 +438,7 @@ int main(){
 		case 31:
 			propertyClass = properties[21];
 			cout << "You landed on " << propertyClass->getName() << "!" << endl;
+			cout << "Location: " << location << " | Color: " << propertyClass->getColor() << endl;
 			landOnProperty(propertyClass, currPlayer, turn, players);
 			break;
 
@@ -571,6 +593,7 @@ void landOnProperty(Property* property, Player* player, int turn, vector<Player*
 				player->subtractMoney(cost);
 				property->setOwner(turn);
 				player->addProperty(property);
+				cout << "You bought " << property->getName() << "!" << endl;
 				break;
 			}
 			else if (choice == "N" || choice == "n"){
